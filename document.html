@@ -6,6 +6,10 @@
 {% endblock %}
 
 {% block main %}
+    {% for toc in document.toc %}
+        <h{{toc['level']}}><a href="index.html#{{toc['id']}}">{{toc['text']}}</a></h{{toc['level']}}>
+    {% endfor %}
+
     {{document.content|safe}}
    
     {% if document.modifiedTime %}
