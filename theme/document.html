@@ -41,7 +41,9 @@
                  {{author}}<br/>
                {% endfor %}
             {% endif %}
-            <a href="#" class="button-edit">Edit this Article</a>
+            {% if document.editable_by_anyone %}
+                <a href="https://docs.google.com/document/d/{{document.id}}/edit" class="button-edit">Edit this Article</a>
+            {% endif %}
          </div>
          <div>
             <div class="doc-icon icon ion-ios-gear"></div>
