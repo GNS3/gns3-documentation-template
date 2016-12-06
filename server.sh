@@ -1,9 +1,9 @@
 set -e
 
 echo "Compile CSS"
-cd style
+cd theme/style
 lessc index.less index.css 
-cd ..
+cd -
 
 echo "Start server"
 python3 server.py

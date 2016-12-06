@@ -106,7 +106,7 @@ class FakeDocument:
 
 class Handler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args):
-        self._env = Environment(loader=FileSystemLoader('.'))
+        self._env = Environment(loader=FileSystemLoader('theme'))
         self._env.filters['strftime'] = strftime
         super().__init__(*args)
 
