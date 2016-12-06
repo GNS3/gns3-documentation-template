@@ -2,7 +2,7 @@
 <html>
    <head>
       <meta charset="utf-8">
-      <title>{% block title %}{% endblock %}</title>
+      <title>{% block title %}GNS3 documentation{% endblock %}</title>
       {% block head %}{% endblock %}
 
       <script src="https://use.typekit.net/bxm6mit.js"></script>
@@ -13,6 +13,7 @@
       <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
       <link rel="stylesheet" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
       <link rel="stylesheet" href="{{root}}/theme/style/index.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
       <script type="text/javascript" src="{{root}}/theme/assets/scripts/jquery.min.js"></script>
       <script type="text/javascript" src="{{root}}/theme/assets/scripts/particles.min.js"></script>
    </head>
@@ -45,5 +46,12 @@
       </div>
 
       {% block main %}{% endblock %}
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script> 
+   <script type="text/javascript"> docsearch({
+   apiKey: 'a83755c0872ca3a1d4a8af1ad443d037',
+   indexName: 'gns3',
+   inputSelector: '.search'
+   }); 
+   </script>
    </body>
 </html>

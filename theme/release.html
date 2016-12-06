@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="header-push"></div>
+<div class="subheader">
+   <div class="breadcrumb">
+      <a href="{{root}}/">
+         <b>Documentation</b>
+      </a>
+      &nbsp; /  &nbsp;
+      <a href=".">Release Notes</a>
+   </div>
+   <div class="search-input">
+      <div class="icon ion-android-search"></div>
+      <input type="text" placeholder="Search Documentation" class="search">
+   </div>
+</div>
+
+<div class="release-note-block">
+    {{document.content|safe}}
+</div>
+{% endblock %}

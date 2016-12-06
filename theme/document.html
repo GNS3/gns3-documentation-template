@@ -1,9 +1,5 @@
 {% extends "base.html" %}
 
-{% block head %}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
-{% endblock head %}
-
 {% block title %}GNS3 {{document.title}}{% endblock %}
 
 {% block main %}
@@ -51,11 +47,4 @@
       </div>
    </div>
 </div>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script> 
-<script type="text/javascript"> docsearch({
-apiKey: 'a83755c0872ca3a1d4a8af1ad443d037',
-indexName: 'gns3',
-inputSelector: '.search'
-}); 
-</script>
 {% endblock %}
