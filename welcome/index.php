@@ -1,6 +1,6 @@
 <div class="welcome-splash">
    <div id="welcome-particles"></div>
-   <div class="headline">
+   <div class="welcome-headline">
       <div class="welcome-icon icon ion-ios-book-outline"></div>
       <div class="title">Documentation</div>
       <div class="subtitle">The official guide and reference for GNS3</div>

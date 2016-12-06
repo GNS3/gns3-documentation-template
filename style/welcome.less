@@ -20,26 +20,21 @@
    display: block;
    position: relative;
    width: 100%;
-   background: #000;
-   background: linear-gradient(40deg, rgb(26, 154, 167) 0%, rgb(62, 38, 102) 80%);
-   //background: linear-gradient(90deg, #03A9F4 50%, #B2EBF2 100%);
    background: linear-gradient(90deg, #205d78, #3888ab);
-   // background: #205d78;
    text-align: center;
    height: 540px;
    box-shadow: 12px 0px 30px rgba(0,0,0,0.6);
-
    color: #fff;
    overflow: hidden;
 
-   .headline {
+   .welcome-headline {
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
       padding: 180px 0 0 0;
-
+      z-index: 11;
    }
 
    .welcome-icon {
@@ -144,34 +139,15 @@
       display: inline-block;
       width: 60px;
       height: 60px;
-      line-height: 58px;
-
-      // border: 2px solid #39c5d5;
-      // background: linear-gradient(5deg, rgb(49, 197, 212), rgb(61, 123, 149));
       border-radius: 50%;
       font-size: 30px;
-      color: #39c5d5;
-
       line-height: 60px;
       background: #00E676;
       color: #fff;
 
-      &.green {
-
-
-         background: #1DE9B6;
-      //   color: #E8F5E9;
-      }
-
-      &.blue {
-         background: #00B0FF;
-
-      }
-
-      &.purple {
-         background: #7C4DFF;
-
-      }
+      &.green { background: #1DE9B6; }
+      &.blue { background: #00B0FF; }
+      &.purple { background: #7C4DFF; }
    }
 
    .label {
