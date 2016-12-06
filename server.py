@@ -103,6 +103,78 @@ class FakeDocument:
 </div>
 """
 
+class FakeTocDocument:
+    def __init__(self):
+        self.content = """
+<div>
+<h1 id="h.j9gagzmy8tts">Getting started</h1>
+<p><span><a href="../1PvtRW5eAb8RJZ11maEYD9_aLY8kkdhgaMB0wPCz8a38/index.html">Getting started with GNS3</a></span></p>
+<p><span><a href="../1yL-p0vPROWPTkQqkEzL2IaDu7iYW-PUzpFamnksHH98/index.html">Setup wizard for local server</a></span></p>
+<p><span><a href="../1wdfvS-OlFfOf7HWZoSXMbG58C4pMSy7vKJFiKKVResc/index.html">Setup wizard for GNS3 VM</a></span></p>
+<p><span><a href="../1wr2j2jEfX6ihyzpXzC23wQ8ymHzID4K3Hn99-qqshfg/index.html">Your first GNS3 topology</a></span></p>
+<p><span><a href="../1d1huu6z9-wWGD_ipTSQZqy2mpaxiqzymu-YQo6at_Jg/index.html">Your first Cisco GNS3 Topology</a></span></p>
+<h1 id="h.me1xe377n8hn">Installation</h1>
+<p><span><a href="../11YYG4NQlPSl31YwvVvBS9RAsOLSYv0Ocy-uG2K8ytIY/index.html">Installation on Windows</a></span></p>
+<p><span><a href="../1MlG-VjkfQVEDVwGMxE3sJ15eU2KTDsktnZZH8HSR-IQ/index.html">Installation on Mac OS X</a></span></p>
+<p><span><a href="../1QXVIihk7dsOL7Xr7Bmz4zRzTsJ02wklfImGuHwTlaA4/index.html">Installation on Linux</a></span></p>
+<p><span><a href="../1c2Iyiczy6efnv-TS_4Hc7p11gn03-ytz9ukgwFfckDk/index.html">Install on a remote server</a></span></p>
+<h1 id="h.6wngxymt45yb">Using GNS3</h1>
+<h2 id="h.kocswht0lisj">Beginner</h2>
+<p><span><a href="../1NjJlvu176VG4mq7qAl4wDo79P7pmOaiaa-c7kW5htuo/index.html">The GNS3 GUI</a></span></p>
+<p><span><a href="../1BcjCN6dQkS3YKHHJjnx7n8WMSBh0IDRS_qRE15-yyF8/index.html">Change node symbol</a></span></p>
+<p><span><a href="../1maZMqcXnk-l6xPLxReUNpI5V0sNGnEKZyZZJdZYmzsA/index.html">GNS3 Styles</a></span></p>
+<p><span><a href="../1aQSkL4KyIh-3j-UCeuukj4Wg1VJ7uI-vwcewaUHbjbU/index.html">Switching and GNS3</a></span></p>
+<p></p>
+<h2 id="h.zfm47sfkea9g">Advanced</h2>
+<p><span><a href="../1vFs-KENh2uUFfb47Q2oeSersmEK4WahzWX-HrMIMd00/index.html">Connect GNS3 to the internet</a></span></p>
+<p><span><a href="../1EjaCJlcM0RYIyyE_MbJOYNatEBnffOX5tcnJShR_KfY/index.html">Connect GNS3 to the internet (GNS3 VM)</a></span></p>
+<p><span><a href="../1eMqJLSBFgcHaOGctAoNKfN1QpxdJvVsfVfPt6lVCmek/index.html">The NAT node</a></span></p>
+<p><span><a href="../1f6uXq05vukccKdMCHhdki5MXFhV8vcwuGwiRvXMQvM0/index.html">GNS3 server configuration file</a></span></p>
+<p><span><a href="../1r-SWM3ro8ArPjMHgQslphaLLTjxx0fgOnOCq_1eGajA/index.html">Running the GNS3 server as a daemon</a></span></p>
+<p><span><a href="../1ESckH2e9owC5skfV09Aba1u2pji8bE1ZFDkXqMLVt3Y/index.html">Client server SSL encryption</a></span></p>
+<p><span><a href="../14ynSsVUQX-Lj__qPQR_syDDGCKKtM64m2SYc5vWROT4/index.html">Special IPs in GNS3</a></span></p>
+<p></p>
+<h1 id="h.i33ukcrg68hx">Contribute to GNS3</h1>
+<p><span><a href="../1kjkcWqLZTh-GPRH8rtHD9Yy6RWprWe1882gJvIZ3XmY/index.html">Contribute to GNS3</a></span></p>
+<p><span><a href="../1EYTxujuTGa9sT-d2S3Dhs57olk-MzWWB0PYoZkzSDl8/index.html">Development of GNS3</a></span></p>
+<h1 id="h.vxalfw2372k">Emulators</h1>
+<p><span><a href="../1o4IX8nXISl5gb4BwoSFrUht3MeTjkzHM1TCeWAe669g/index.html">Which emulator should I use?</a></span></p>
+<h2 id="h.iqqtkxwxj64v">Dynamips</h2>
+<p><span><a href="../1-kBrTplBltp9P3P-AigoMzlDO-ISyL1h3bYpOl5Q8mQ/index.html">Cisco IOS images for Dynamips</a></span></p>
+<p></p>
+<h2 id="h.v5znocpkpe0i">VMware</h2>
+<p><span><a href="../1u_D9XSSA5PVFrOrTWSw1Vn8Utvimd6ksv76F7731N84/index.html">Adding VMware VMs to GNS3 Topologies</a></span></p>
+<p></p>
+<h2 id="h.eqlzalmsrej0">Docker</h2>
+<p><span><a href="../1KGkv1Vm5EgeDusk1qS1svacpuQ1ZUQSVK3XqJ01WKGc/index.html">Docker support in GNS3</a></span></p>
+<p><span><a href="../14EmmKdryY3FiMOQEclSyHQ3MUlycDGE_DwNPC8L4GIc/index.html">Create a docker container for GNS3</a></span></p>
+<p></p>
+<h2 id="h.fmw7x17jvo5a">Qemu</h2>
+<p><span><a href="../1o_cc-9cJ0vQuYex5PsMinJhP0geM_XxOc8seYMLVvUM/index.html">Qemu system UUID</a></span></p>
+<h1 id="h.pbv302tbwabx">Appliances</h1>
+<p><span><a href="../1MAdxz0BSEAfGM7tA-w-o3TMmf8XOx7nBf0z6d9nRz_c/index.html">Install an appliance from the GNS3 Marketplace</a></span></p>
+<p><span><a href="../1JZLzpB2gWVtdlgjBkKAMrKckpee9YjqAyt5zliBXGkM/index.html">Cisco ASA</a></span></p>
+<h1 id="h.dnq610tnad5e">Troubleshooting</h1>
+<p><span><a href="../1OB0_9M-_QyQZTlC1eY_Dc60BgwjU2bXGdnf-B7Uf_u4/index.html">Troubleshoot GNS3</a></span></p>
+<h1 id="h.dp77ia5ogwe9">FAQ</h1>
+<p><span><a href="../18v-Zt79cVj2VR2QMkvW7PekZ-bhd-MpZJVkkOVW0WSU/index.html">General FAQ</a></span></p>
+<p><span><a href="../1vJwh4_whwtfjb8pQ8vKekcWrA1galIqA1eHgeClOsPY/index.html">Where do I get IOS images?</a></span></p>
+</div>
+        """
+
+class FakeReleaseDocument:
+    def __init__(self):
+        self.content = """
+<div>
+<p class="badge alpha"><strong>ALPHA</strong><span><a href="../1jtdTQAcKa7JmQTNH2LoxQmOYalts7O0urmZ9CNnoEpU/index.html">Version 2.0</a></span></p>
+<p></p>
+<p class="badge stable"><strong>STABLE</strong><span><a href="../1gQa_s6bI3ltX5_EUbJ5gglxroXdHMXt3i2_rMJCG4jQ/index.html">Version 1.5</a></span></p>
+<p></p>
+<p class="badge stable"><strong>STABLE</strong><span><a href="../1E8V7wcENH7FV99N8y6rgMbtJFrUVyfwvq06cRpIa8NI/index.html">Version 1.4</a></span></p>
+<p></p>
+</div>
+"""
+
 
 class Handler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args):
@@ -120,8 +192,10 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path == "/" or self.path == "/index.html":
             return self.render("index.html")
-        elif self.path == "/explore/index.html":
-            return self.render("explore.html", root='..')
+        elif self.path == "/1FFbs5hOBbx8O855KxLetlCwlbymTN8L1zXXQzCqfmy4/index.html":
+            return self.render("explore.html", root='..', document=FakeTocDocument())
+        elif self.path == "/17Jj0doZyFf-KYyZ1czJufQMlIK8UMlxpoegYs_3Po6Q/index.html":
+            return self.render("release.html", root='..', document=FakeReleaseDocument())
         elif self.path.startswith("/1") and self.path.endswith("/index.html"):
             return self.render("document.html", root="..", document=FakeDocument())
         return super().do_GET()

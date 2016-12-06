@@ -554,47 +554,43 @@ p {
   margin: 0;
 }
 .release-note-block {
+  margin-top: 10px;
   position: relative;
   width: 960px;
   margin: auto;
 }
-.release-note-block .description {
-  float: left;
-  width: 70%;
-  border-left: 1px solid #ddd;
-  padding: 0px 60px;
-}
-.release-note-block .description a {
-  text-decoration: none;
-}
-.release-note-block .meta {
-  float: left;
-  width: 30%;
-  padding: 60px;
-  text-align: right;
-  color: #03A9F4;
-}
-.release-note-block .meta .badge {
-  display: inline-block;
-  padding: 3px 12px;
-  color: #fff;
-  background: #aaa;
-  border-radius: 3px;
-  font-family: 'Montserrat';
-  text-transform: uppercase;
-  font-size: 11px;
+.release-note-block .badge {
+  font-size: 18px;
   margin-bottom: 12px;
 }
-.release-note-block .meta .badge.alpha {
+.release-note-block .badge span {
+  padding: 0px 60px;
+}
+.release-note-block .badge span a {
+  text-decoration: none;
+}
+.release-note-block .badge strong {
+  text-align: center;
+  display: inline-block;
+  color: #fff;
+  border-radius: 3px;
+  font-family: 'Montserrat';
+  font-size: 11px;
+  width: 60px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  text-transform: uppercase;
+}
+.release-note-block .alpha strong {
   background: #FF4081;
 }
-.release-note-block .meta .badge.beta {
+.release-note-block .beta strong {
   background: #673AB7;
 }
-.release-note-block .meta .badge.rc {
+.release-note-block .release_candidate strong {
   background: #FFC107;
 }
-.release-note-block .meta .badge.stable {
+.release-note-block .stable strong {
   background: #4CAF50;
 }
 #welcome-particles {
