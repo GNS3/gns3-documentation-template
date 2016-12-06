@@ -120,6 +120,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path == "/" or self.path == "/index.html":
             return self.render("index.html")
+        elif self.path == "/explore/index.html":
+            return self.render("explore.html", root='..')
         elif self.path.startswith("/1") and self.path.endswith("/index.html"):
             return self.render("document.html", root="..", document=FakeDocument())
         return super().do_GET()
