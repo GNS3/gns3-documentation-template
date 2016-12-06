@@ -57,13 +57,13 @@ class FakeDocument:
 <p></p>
 <h1 id="h.uftuzeconr0d">Using ASA</h1>
 <p>Once the ASA appliance is imported into GNS3, you can create topologies such as the following:</p>
-<p><span class="image"><a alt="image04.png" title="" class="image" href="5164d3b3afa2d162f660fd69e29628cf.jpg" target="_blank"><img src="5164d3b3afa2d162f660fd69e29628cf.jpg"></a></span></p>
+<p><span class="image"><a alt="image04.png" title="" class="image" href="https://docs.gns3.com/5164d3b3afa2d162f660fd69e29628cf.jpg" target="_blank"><img src="https://docs.gns3.com/1JZLzpB2gWVtdlgjBkKAMrKckpee9YjqAyt5zliBXGkM/5164d3b3afa2d162f660fd69e29628cf.jpg"></a></span></p>
 <p>The cloud is linked to an eth2 interface of the GNS3 VM. In order to have an eth2 interface in the VM in the GNS3 VM settings in VMware (not in GNS3, the parameters of the VM in VMware) add a third network adapter with host only.</p>
 <p></p>
 <p>We use a generic switch between the cloud and the ASAv vm because a qemu limitation of the current version of GNS3 prevent a direct link between qemu and a cloud.</p>
 <p></p>
 <p>Our cloud configuration:</p>
-<p><span class="image"><a alt="image05.png" title="" class="image" href="7da7206df1ad69400de81b2947669776.jpg" target="_blank"><img src="7da7206df1ad69400de81b2947669776.jpg"></a></span></p>
+<p><span class="image"><a alt="image05.png" title="" class="image" href="https://docs.gns3.com/7da7206df1ad69400de81b2947669776.jpg" target="_blank"><img src="https://docs.gns3.com/1JZLzpB2gWVtdlgjBkKAMrKckpee9YjqAyt5zliBXGkM/7da7206df1ad69400de81b2947669776.jpg"></a></span></p>
 <p>The ASA is connected to the switch via is Management 0/0 interface.</p>
 <p>After that boot the ASAv it will take a long time with a reboot the first time. Open the console and will see a prompt:</p>
 <p class="code">ciscoasa&gt;</p>
@@ -85,13 +85,13 @@ class FakeDocument:
 <p>Now open <span><a href="https://172.16.16.156/">https://172.16.16.156</a></span>&nbsp;and ignore the HTTPS certificate error.</p>
 <p></p>
 <p>You will see this page</p>
-<p><span class="image"><a alt="image02.png" title="" class="image" href="e778a8e5bd51a94a32a17eb4d3ad2597.jpg" target="_blank"><img src="e778a8e5bd51a94a32a17eb4d3ad2597.jpg"></a></span></p>
+<p><span class="image"><a alt="image02.png" title="" class="image" href="https://docs.gns3.com/1JZLzpB2gWVtdlgjBkKAMrKckpee9YjqAyt5zliBXGkM/e778a8e5bd51a94a32a17eb4d3ad2597.jpg" target="_blank"><img src="https://docs.gns3.com/e778a8e5bd51a94a32a17eb4d3ad2597.jpg"></a></span></p>
 <p>Click on install ASDM launcher. And when you have ASDM on your computer opened it. Enter the IP of the ASA and OK</p>
-<p><span class="image"><a alt="image03.png" title="" class="image" href="f423b69b1947df18f7bdfb29b6d04b1d.jpg" target="_blank"><img src="f423b69b1947df18f7bdfb29b6d04b1d.jpg"></a></span></p>
+<p><span class="image"><a alt="image03.png" title="" class="image" href="https://docs.gns3.com/f423b69b1947df18f7bdfb29b6d04b1d.jpg" target="_blank"><img src="https://docs.gns3.com/1JZLzpB2gWVtdlgjBkKAMrKckpee9YjqAyt5zliBXGkM/f423b69b1947df18f7bdfb29b6d04b1d.jpg"></a></span></p>
 <p>You will see the ASDM interface</p>
-<p><span class="image"><a alt="image01.png" title="" class="image" href="a742fab65b5f3787d6940446a271588f.jpg" target="_blank"><img src="a742fab65b5f3787d6940446a271588f.jpg"></a></span></p>
+<p><span class="image"><a alt="image01.png" title="" class="image" href="https://docs.gns3.com/1JZLzpB2gWVtdlgjBkKAMrKckpee9YjqAyt5zliBXGkM/a742fab65b5f3787d6940446a271588f.jpg" target="_blank"><img src="https://docs.gns3.com/1JZLzpB2gWVtdlgjBkKAMrKckpee9YjqAyt5zliBXGkM/a742fab65b5f3787d6940446a271588f.jpg"></a></span></p>
 <p>The warning about the licence is normal. The appliance provided by Cisco is dedicated to learning not a production usage where you need to pay.</p>
-<p><span class="image"><a alt="image00.png" title="" class="image" href="21f220aa98028bdc08c1d8f652674bda.jpg" target="_blank"><img src="21f220aa98028bdc08c1d8f652674bda.jpg"></a></span></p>
+<p><span class="image"><a alt="image00.png" title="" class="image" href="https://docs.gns3.com/1JZLzpB2gWVtdlgjBkKAMrKckpee9YjqAyt5zliBXGkM/21f220aa98028bdc08c1d8f652674bda.jpg" target="_blank"><img src="https://docs.gns3.com/1JZLzpB2gWVtdlgjBkKAMrKckpee9YjqAyt5zliBXGkM/21f220aa98028bdc08c1d8f652674bda.jpg"></a></span></p>
 <p></p>
 <h1 id="h.z3tym6w95glf">Troubleshooting</h1>
 <h2 id="h.rdlhal6wt4c9">No console is showing with ASAv</h2>
