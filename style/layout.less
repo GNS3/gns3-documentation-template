@@ -1,0 +1,193 @@
+body {
+   font-family: @body-font-family;
+   background: #fff;
+}
+
+//======================================================================
+// Header
+//======================================================================
+
+#header {
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   height: @header-height-md;
+   line-height: @header-height-md;
+   z-index: 3;
+   background: rgba(0,0,0,0.6);
+   font-family: 'Montserrat';
+   text-transform: uppercase;
+
+   &.welcome {
+      background: rgba(0,0,0,0.3);
+   }
+
+   .xs &, .sm & {
+      .actions { border: none; }
+      .actions a { font-size: 24px; }
+      background: rgba(0,0,0,0.8);
+
+      .aux-nav { float: right; }
+   }
+
+   .md &, .lg &, .xl & {
+      .aux-nav {
+         position: absolute;
+         top: 50%;
+         right: 0;
+         height: 30px;
+         line-height: 30px;
+         margin-top: -15px;
+      }
+   }
+
+   .lg &, .xl & {
+      height: @header-height-lg;
+      line-height: @header-height-lg;
+   }
+}
+
+//======================================================================
+// Logo
+//======================================================================
+
+#logo {
+   float: left;
+   padding: 18px;
+
+   img { height: 36px; }
+}
+
+//======================================================================
+// Nav
+//======================================================================
+
+#nav {
+   float: left;
+   margin-left: 0px;
+
+   .xs &, .sm & { display: none; }
+   .md & {
+      height: @header-height-md;
+      line-height: @header-height-md;
+   }
+   .lg &, .xl & {
+      height: @header-height-lg;
+      line-height: @header-height-lg;
+   }
+
+
+   a {
+      float: left;
+      color: #fff;
+      padding: 0 18px;
+      font-size: 12px;
+      font-weight: bold;
+   }
+
+   .icon { display: none; }
+}
+
+//======================================================================
+// Header Push
+//======================================================================
+
+.header-push {
+   float: left;
+   display: block;
+   width: 100%;
+   height: 78px;
+   background: linear-gradient(90deg, #03A9F4, #B2EBF2);
+}
+
+//======================================================================
+// Wrapper
+//======================================================================
+
+.gns3-wrapper {
+   display: block;
+   position: relative;
+   width: 720px;
+   margin: auto;
+   width: 100%;
+}
+
+//======================================================================
+// Subheader
+//======================================================================
+
+.subheader {
+   float: left;
+   display: block;
+   width: 100%;
+   height: 78px;
+   line-height: 78px;
+   padding: 0px 24px 0px 24px;
+   background: #03A9F4;
+   color: #fff;
+   color: rgba(255,255,255,0.8);
+
+   b {
+      color: #fff;
+   }
+
+   a {
+      color: #666;
+      color: rgba(255,255,255,0.8);
+   }
+
+   .breadcrumb {
+      float: left;
+      font-size: 14px;
+      font-family: 'Montserrat';
+      text-transform: uppercase;
+   }
+
+   .search-input {
+      float: right;
+      position: relative;
+      width: 240px;
+      overflow: hidden;
+      height: 36px;
+      margin: 21px 0;
+
+      .icon {
+         position: absolute;
+         top: -21px;
+         left: 12px;
+         font-size: 20px;
+         color: #fff;
+      }
+
+      input {
+         float: left;
+         width: 100%;
+         padding: 18px 0 18px 48px;
+         font-size: 14px;
+         height: 18px;
+         line-height: 18px;
+         color: #fff;
+         background: rgba(0,0,0,0.1);
+         border-radius: 21px;
+         transition: 300ms;
+
+         &:focus {
+            background: rgba(0,0,0,0.2);
+         }
+
+         &::-webkit-input-placeholder {
+            color: rgba(255,255,255,0.7);
+         }
+         &::-moz-placeholder {
+            color: rgba(255,255,255,0.7);
+         }
+         &:-ms-input-placeholder {
+            color: rgba(255,255,255,0.7);
+         }
+         &:-moz-placeholder {
+           color: rgba(255,255,255,0.7);
+         }
+      }
+   }
+}
