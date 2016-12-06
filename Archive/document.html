@@ -6,8 +6,25 @@
 {% endblock %}
 
 {% block main %}
+    {% for toc in document.toc %}
+        <h{{toc['level']}}><a href="index.html#{{toc['id']}}">{{toc['text']}}</a></h{{toc['level']}}>
+    {% endfor %}
+
     {{document.content|safe}}
-    
+   
+    {% if document.modifiedTime %}
+        {{ document.modifiedTime | strftime("%B %-d, %Y") }}
+    {% endif %}
+
+
+    {% if document.authors | length > 0 %}
+         <ul id="docxel_authors">
+             {% for author in document.authors %}
+                 <li>{{author}}</li>
+             {% endfor %}
+         </ul>
+     {% endif %}
+
     {% if document.editable_by_anyone %}
         <style>
             #editme a{background:#000;color:#fff;text-decoration:none;font-family:arial,sans-serif;text-align:center;font-weight:bold;padding:5px 40px;font-size:1rem;line-height:2rem;position:relative;transition:0.5s;}
@@ -25,7 +42,7 @@
         </style>
         <span id="editme">
         <a href="https://docs.google.com/document/d/{{document.id}}/edit">Edit me</a>
-        </span>
+        </span>        
     {% endif %}
 {% endblock %}
 
