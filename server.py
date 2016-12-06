@@ -192,6 +192,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path == "/" or self.path == "/index.html":
             return self.render("index.html")
+        elif self.path == "/videos":
+            return self.render("videos.html")
         elif self.path == "/1FFbs5hOBbx8O855KxLetlCwlbymTN8L1zXXQzCqfmy4/index.html":
             return self.render("explore.html", root='..', document=FakeTocDocument())
         elif self.path == "/17Jj0doZyFf-KYyZ1czJufQMlIK8UMlxpoegYs_3Po6Q/index.html":
