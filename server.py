@@ -4,6 +4,7 @@ import http.server
 import socketserver
 import datetime
 
+
 PORT = 8000
 
 # Filters
@@ -21,6 +22,8 @@ class FakeDocument:
         self.editable_by_anyone = True
         self.id = "1JZLzpB2gWVtdlgjBkKAMrKckpee9YjqAyt5zliBXGkM"
         self.authors = ["John Doe", "Jane Doe"]
+        self.modifiedTime = datetime.datetime.now()
+        self.toc = [{'level': 1, 'id': 'h.1zcxdkbdbmy1', 'text': 'ASA 8'}, {'level': 1, 'id': 'h.46g02c8z74m8', 'text': 'ASAv'}, {'level': 2, 'id': 'h.lla7xvwpp5jv', 'text': 'ASAv with Qemu (RECOMMENDED)'}, {'level': 2, 'id': 'h.edn8761cbbra', 'text': 'ASAv with VMware'}, {'level': 1, 'id': 'h.uftuzeconr0d', 'text': 'Using ASA'}, {'level': 2, 'id': 'h.no54mwxqb94', 'text': 'Configure ASDM'}, {'level': 1, 'id': 'h.z3tym6w95glf', 'text': 'Troubleshooting'}, {'level': 2, 'id': 'h.rdlhal6wt4c9', 'text': 'No console is showing with ASAv'}, {'level': 2, 'id': 'h.drkgoov0yp0y', 'text': 'Configuration is not saving when running ASAv on Windows'}]
         self.content = """
 <div>
 <p class="title" id="h.n9rpnjlpmr0w">Cisco ASA</p>
@@ -118,7 +121,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         if self.path == "/" or self.path == "/index.html":
             return self.render("index.html")
         elif self.path.startswith("/1") and self.path.endswith("/index.html"):
-            return self.render("document.html", document=FakeDocument())
+            return self.render("document.html", root="..", document=FakeDocument())
         return super().do_GET()
 
 httpd = socketserver.TCPServer(("", PORT), Handler)

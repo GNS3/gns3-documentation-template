@@ -28,7 +28,7 @@
    background: #fafafa;
    background: #E1F5FE;
 
-   .heading {
+   h1 {
       display: block;
       text-align: left;
       font-size: 14px;
@@ -38,18 +38,20 @@
       padding-top: 30px;
       padding-bottom: 12px;
       font-weight: 700;
-      color: #546E7A;
       border-top: 1px solid #ddd;
       border-top: 1px solid #B3E5FC;
       margin-top: 12px;
-      color: #546E7A;
+
+      a {
+          color: #546E7A;
+      }
 
       &:first-child {
          border: none;
       }
    }
 
-   .subheading {
+   h2 {
       display: block;
       text-align: left;
       font-size: 14px;
@@ -57,12 +59,19 @@
       padding-left: 24px;
       padding-bottom: 18px;
       padding-right: 30px;
-      color: #444;
+
+      a {
+        color: #444;
+      }
 
       &.active {
          font-weight: 700;
          color: @primary-color;
       }
+   }
+
+   h3 {
+      display: none;
    }
 }
 
