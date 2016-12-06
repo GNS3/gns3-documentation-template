@@ -2,6 +2,7 @@
    $headerStyle = 'welcome';
    include '../header.php'
 ?>
+
 <div class="explore-header">
    <div class="headline">
       <div class="welcome-icon icon ion-ios-book-outline"></div>
@@ -13,7 +14,8 @@
       </div>
    </div>
 </div>
-<div class="wrapper">
+
+<div class="explore-wrapper">
    <div class="explore-block">
       <div class="icon ion-ios-gear-outline"></div>
       <h1>Installation</h1>

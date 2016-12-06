@@ -1,7 +1,8 @@
 <? include '../header.php' ?>
+
 <div class="header-push"></div>
 <div class="subheader">
-   <div class="title">
+   <div class="breadcrumb">
       <a href="/">
          <b>Documentation</b>
       </a>
@@ -14,12 +15,12 @@
    </div>
 </div>
 
-<div class="secondary-column">
-   <div class="badge alpha">Alpha</div>
-   <div class="release-date">November 1, 2016</div>
-</div>
-<div class="primary-column">
-   <div class="inner gns3-article">
+<div class="release-note-block">
+   <div class="meta">
+      <div class="badge alpha">Alpha</div>
+      <div class="release-date">November 1, 2016</div>
+   </div>
+   <div class="description gns3-document-styles">
       <a href="/release-notes/view">
          <h1>Version 2.0</h1>
 
@@ -30,12 +31,12 @@
    </div>
 </div>
 
-<div class="secondary-column">
-   <div class="badge stable">Stable</div>
-   <div class="release-date">September 1, 2016</div>
-</div>
-<div class="primary-column">
-   <div class="inner gns3-article">
+<div class="release-note-block">
+   <div class="meta">
+      <div class="badge stable">Stable</div>
+      <div class="release-date">September 1, 2016</div>
+   </div>
+   <div class="description gns3-document-styles">
       <a href="/release-notes/view">
          <h1>Version 1.5</h1>
 

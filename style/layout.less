@@ -1,11 +1,5 @@
-@header-height-md : 65px;
-@header-height-md : 78px;
-@header-height-lg : 78px;
-@header-height-xl : 72px;
-@footer-height-lg : 36px;
-
 body {
-   font-family: 'Roboto';
+   font-family: @body-font-family;
    background: #fff;
 }
 
@@ -54,12 +48,20 @@ body {
    }
 }
 
+//======================================================================
+// Logo
+//======================================================================
+
 #logo {
    float: left;
    padding: 18px;
-   
+
    img { height: 36px; }
 }
+
+//======================================================================
+// Nav
+//======================================================================
 
 #nav {
    float: left;
@@ -85,4 +87,107 @@ body {
    }
 
    .icon { display: none; }
+}
+
+//======================================================================
+// Header Push
+//======================================================================
+
+.header-push {
+   float: left;
+   display: block;
+   width: 100%;
+   height: 78px;
+   background: linear-gradient(90deg, #03A9F4, #B2EBF2);
+}
+
+//======================================================================
+// Wrapper
+//======================================================================
+
+.gns3-wrapper {
+   display: block;
+   position: relative;
+   width: 720px;
+   margin: auto;
+   width: 100%;
+}
+
+//======================================================================
+// Subheader
+//======================================================================
+
+.subheader {
+   float: left;
+   display: block;
+   width: 100%;
+   height: 78px;
+   line-height: 78px;
+   padding: 0px 24px 0px 24px;
+   background: #03A9F4;
+   color: #fff;
+   color: rgba(255,255,255,0.8);
+
+   b {
+      color: #fff;
+   }
+
+   a {
+      color: #666;
+      color: rgba(255,255,255,0.8);
+   }
+
+   .breadcrumb {
+      float: left;
+      font-size: 14px;
+      font-family: 'Montserrat';
+      text-transform: uppercase;
+   }
+
+   .search-input {
+      float: right;
+      position: relative;
+      width: 240px;
+      overflow: hidden;
+      height: 36px;
+      margin: 21px 0;
+
+      .icon {
+         position: absolute;
+         top: -21px;
+         left: 12px;
+         font-size: 20px;
+         color: #fff;
+      }
+
+      input {
+         float: left;
+         width: 100%;
+         padding: 18px 0 18px 48px;
+         font-size: 14px;
+         height: 18px;
+         line-height: 18px;
+         color: #fff;
+         background: rgba(0,0,0,0.1);
+         border-radius: 21px;
+         transition: 300ms;
+
+         &:focus {
+            background: rgba(0,0,0,0.2);
+         }
+
+         &::-webkit-input-placeholder {
+            color: rgba(255,255,255,0.7);
+         }
+         &::-moz-placeholder {
+            color: rgba(255,255,255,0.7);
+         }
+         &:-ms-input-placeholder {
+            color: rgba(255,255,255,0.7);
+         }
+         &:-moz-placeholder {
+           color: rgba(255,255,255,0.7);
+         }
+      }
+   }
 }

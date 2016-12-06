@@ -18,7 +18,7 @@
    <body>
       <div id="header" class="<? echo $headerStyle ?>">
          <a href="/" id="logo">
-            <img src="/images/logo-header.png" alt="">
+            <img src="/assets/images/logo-header.png" alt="GNS3 Documentation">
          </a>
          <div id="nav" class="mui3--t3c">
             <a href="/software" data-section="software">
