@@ -1,0 +1,88 @@
+@header-height-md : 65px;
+@header-height-md : 78px;
+@header-height-lg : 78px;
+@header-height-xl : 72px;
+@footer-height-lg : 36px;
+
+body {
+   font-family: 'Roboto';
+   background: #fff;
+}
+
+//======================================================================
+// Header
+//======================================================================
+
+#header {
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   height: @header-height-md;
+   line-height: @header-height-md;
+   z-index: 3;
+   background: rgba(0,0,0,0.6);
+   font-family: 'Montserrat';
+   text-transform: uppercase;
+
+   &.welcome {
+      background: rgba(0,0,0,0.3);
+   }
+
+   .xs &, .sm & {
+      .actions { border: none; }
+      .actions a { font-size: 24px; }
+      background: rgba(0,0,0,0.8);
+
+      .aux-nav { float: right; }
+   }
+
+   .md &, .lg &, .xl & {
+      .aux-nav {
+         position: absolute;
+         top: 50%;
+         right: 0;
+         height: 30px;
+         line-height: 30px;
+         margin-top: -15px;
+      }
+   }
+
+   .lg &, .xl & {
+      height: @header-height-lg;
+      line-height: @header-height-lg;
+   }
+}
+
+#logo {
+   float: left;
+   padding: 18px;
+   
+   img { height: 36px; }
+}
+
+#nav {
+   float: left;
+   margin-left: 0px;
+
+   .xs &, .sm & { display: none; }
+   .md & {
+      height: @header-height-md;
+      line-height: @header-height-md;
+   }
+   .lg &, .xl & {
+      height: @header-height-lg;
+      line-height: @header-height-lg;
+   }
+
+
+   a {
+      float: left;
+      color: #fff;
+      padding: 0 18px;
+      font-size: 12px;
+      font-weight: bold;
+   }
+
+   .icon { display: none; }
+}
