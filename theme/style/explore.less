@@ -46,8 +46,7 @@
       width: 360px;
       background: #fff;
       border-radius: 21px;
-      overflow: hidden;
-      padding: 9px 0;
+      padding: 12px 0;
       height: 42px;
       box-shadow: inset 2px 2px 6px rgba(0,0,0,0.3);
 
@@ -57,6 +56,10 @@
          left: 12px;
          font-size: 24px;
          color: #aaa;
+      }
+
+      .algolia-autocomplete {
+         width: 100%;
       }
 
       input {
@@ -69,21 +72,24 @@
    }
 }
 
-.explore-wrapper {
+.explore-content {
    width: 900px;
    margin: auto;
-}
-
-.explore-block {
-   float: left;
-   width: 100%;
-   position: relative;
-   padding: 60px 0 60px 270px;
-   border-bottom: 1px solid #ddd;
+// }
+//
+// .explore-block {
+   // float: left;
+   // width: 100%;
+   // position: relative;
+   // padding: 60px 0 60px 270px;
+   // border-bottom: 1px solid #ddd;
 
    a {
       float: left;
-      width: 100%;
+      margin-left: 30%;
+      width: 70%;
+      position: relative;
+      top: -24px;
       color: #03A9F4;
       margin-right: 30px;
       font-size: 18px;
@@ -100,24 +106,28 @@
    }
 
    h1 {
-      position: absolute;
-      top: 66px;
-      top: 132px;
-      left: 30px;
+      float: left;
+      width: 100%;
+      border-top: 1px solid #ddd;
+      padding-top: 30px;
+      margin-top: 30px;
       font-size: 16px;
       font-family: 'Montserrat';
       text-transform: uppercase;
       font-weight: bold;
       color: #205d78;
-
    }
 
    h2 {
-      font-size: 24px;
+      position: relative;
+      top: 12px;
+      width: 25%;
+      text-transform: uppercase;
+      font-size: 14px;
       line-height: 21px;
-      font-weight: 300;
+      font-weight: 700;
       margin-bottom: 12px;
-      color: #555;
+      color: #888;
    }
 
    .section-break {
