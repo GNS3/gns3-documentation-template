@@ -374,7 +374,6 @@ body {
   float: right;
   position: relative;
   width: 240px;
-  overflow: hidden;
   height: 36px;
   margin: 21px 0;
 }
@@ -387,7 +386,7 @@ body {
 }
 .subheader .search-input input {
   float: left;
-  width: 100%;
+  width: 240px;
   padding: 18px 0 18px 48px;
   font-size: 14px;
   height: 18px;
@@ -607,7 +606,6 @@ p {
   width: 360px;
   background: #fff;
   border-radius: 21px;
-  overflow: hidden;
   padding: 9px 0;
   height: 42px;
   box-shadow: inset 2px 2px 6px rgba(0, 0, 0, 0.3);
@@ -620,7 +618,7 @@ p {
   color: #aaa;
 }
 .welcome-splash .search-input input {
-  width: 100%;
+  width: 360px;
   padding: 0 0 0 48px;
   font-size: 14px;
   height: 18px;

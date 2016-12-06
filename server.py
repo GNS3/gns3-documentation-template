@@ -115,7 +115,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Content-type','text/html')
         self.end_headers()
-        self.wfile.write(template.render(root=root, config={"title": "GNS3"}, **kwargs).encode("utf-8"))
+        self.wfile.write(template.render(root=root, lastModifiedTime=datetime.datetime.now(), config={"title": "GNS3"}, **kwargs).encode("utf-8"))
 
     def do_GET(self):
         if self.path == "/" or self.path == "/index.html":

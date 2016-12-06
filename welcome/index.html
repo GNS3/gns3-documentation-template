@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
+{% endblock head %}
+
 {% block headerstyle %}welcome{% endblock%}
 
 {% block main %}
@@ -11,7 +15,7 @@
       <div class="subtitle">The official guide and reference for GNS3</div>
       <div class="search-input">
          <div class="icon ion-android-search"></div>
-         <input type="text" placeholder="Search Documentation">
+         <input type="text" placeholder="Search Documentation" class="search">
       </div>
    </div>
 </div>
@@ -19,43 +23,43 @@
    <div class="welcome-wrapper">
       <div class="welcome-title">
          <div class="title">Explore Documentation</div>
-         <div class="date">Last Updated Dec 1, 2016</div>
+         <div class="date">Last Updated {{ lastModifiedTime | strftime("%B %-d, %Y") }}</div>
       </div>
-      <a href="/explore" class="welcome-tile">
+      <a href="1FFbs5hOBbx8O855KxLetlCwlbymTN8L1zXXQzCqfmy4/index.html" class="welcome-tile">
          <span class="icon ion-folder green"></span>
          <span class="label">Explore Topics</span>
       </a>
 
-      <a href="/release-notes" class="welcome-tile">
+      <a href="17Jj0doZyFf-KYyZ1czJufQMlIK8UMlxpoegYs_3Po6Q/index.html" class="welcome-tile">
          <span class="icon ion-document-text green"></span>
          <span class="label">Releases notes</span>
       </a>
 
-      <a class="welcome-tile">
+      <a class="welcome-tile" href="11YYG4NQlPSl31YwvVvBS9RAsOLSYv0Ocy-uG2K8ytIY/index.html">
          <span class="icon ion-social-windows"></span>
          <span class="label">Getting started<br/>Windows</span>
       </a>
-      <a class="welcome-tile">
+      <a class="welcome-tile" href="1MlG-VjkfQVEDVwGMxE3sJ15eU2KTDsktnZZH8HSR-IQ/index.html">
          <span class="icon ion-social-apple"></span>
          <span class="label">Getting started<br/>Mac OSX</span>
       </a>
-      <a class="welcome-tile">
+      <a class="welcome-tile" href="1QXVIihk7dsOL7Xr7Bmz4zRzTsJ02wklfImGuHwTlaA4/index.html">
          <span class="icon ion-social-tux"></span>
          <span class="label">Getting started<br/>Linux</span>
       </a>
-      <a class="welcome-tile">
+      <a class="welcome-tile" href="1OB0_9M-_QyQZTlC1eY_Dc60BgwjU2bXGdnf-B7Uf_u4/index.html">
          <span class="icon ion-wrench blue"></span>
          <span class="label">Troubleshoot<br/>GNS3</span>
       </a>
-      <a class="welcome-tile">
+      <a class="welcome-tile" href="http://gns3.com/download">
          <span class="icon ion-arrow-down-a blue"></span>
          <span class="label">Download</span>
       </a>
-      <a class="welcome-tile">
+      <a class="welcome-tile" href="https://www.gns3.com/community">
          <span class="icon ion-help purple"></span>
          <span class="label">Support</span>
       </a>
-      <a class="welcome-tile">
+      <a class="welcome-tile" href="http://academy.gns3.com/">
          <span class="icon ion-university purple"></span>
          <span class="label">Training</span>
       </a>
@@ -63,9 +67,16 @@
 </div>
 <script type="text/javascript">
    $(function(){
-      $.getJSON('/welcome/particles.json', function( data ) {
+      $.getJSON('{{root}}/welcome/particles.json', function( data ) {
          particlesJS('welcome-particles', data)
       })
    })
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script> 
+<script type="text/javascript"> docsearch({
+apiKey: 'a83755c0872ca3a1d4a8af1ad443d037',
+indexName: 'gns3',
+inputSelector: '.search'
+}); 
 </script>
 {% endblock %}
