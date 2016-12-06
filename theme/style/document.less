@@ -84,25 +84,36 @@
    padding: 60px 78px;
    font-weight: 300;
    position: relative;
-   padding-right: 378px;
 
-   .meta {
-      position: absolute;
-      right: 0;
-      top: 72px;
-      width: 270px;
-      min-height: 600px;
-      border-left: 1px solid #ddd;
-      padding: 0px 30px;
-      font-size: 13px;
-      line-height: 18px;
-      color: #777;
+   @media screen and (max-width: 1280px) {
+      .meta {
+         display: none;
+      }
+   }   
+
+   @media screen and (min-width: 1281px) {
+      padding-right: 378px;
+
+      .meta {
+         position: absolute;
+         right: 0;
+         top: 72px;
+         width: 270px;
+         min-height: 600px;
+         border-left: 1px solid #ddd;
+         padding: 0px 30px;
+         font-size: 13px;
+         line-height: 18px;
+         color: #777;
+      }
    }
 
    .title {
       font-size: 30px;
       line-height: 36px;
-      padding-bottom: 60px;
+      @media screen and (min-width: 1281px) {
+        padding-bottom: 60px;
+      }
       font-family: 'Montserrat';
       text-transform: uppercase;
       color: #386777;
@@ -172,6 +183,7 @@
 
   .code {
     font-family:"Courier New";
+    font-size: 13px;
     border: 2px gray solid;
     background-color: #f2f2f2;
     width: 100%;
