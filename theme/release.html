@@ -4,11 +4,11 @@
 <div class="header-push"></div>
 <div class="subheader">
    <div class="breadcrumb">
-      <a href="{{root}}/">
+      <a href="/">
          <b>Documentation</b>
       </a>
       &nbsp; /  &nbsp;
-      <a href=".">Release Notes</a>
+      <a href="/release-notes">Release Notes</a>
    </div>
    <div class="search-input">
       <div class="icon ion-android-search"></div>
@@ -17,6 +17,58 @@
 </div>
 
 <div class="release-note-block">
-    {{document.content|safe}}
+   <div class="meta">
+      <div class="badge beta">Beta</div>
+      <div class="release-date">December 8, 2016</div>
+   </div>
+   <div class="description gns3-document-styles">
+      <a href="/1jtdTQAcKa7JmQTNH2LoxQmOYalts7O0urmZ9CNnoEpU/index.html">
+         <h1>Version 2.0</h1>
+
+         <p>Version 2.0 is a new major release of GNS3 which brings major architectural changes and also  new features.</p>
+
+         <p>GNS3 was only a desktop application from the first version up to version 0.8.3. With the more recent 1.x versions, GNS3 has the possibility to use remote servers. Now, in version 2.0, multiple clients could control GNS3 at the same time, also all the “application intelligence” has  been moved to the GNS3 server.</p>
+      </a>
+   </div>
 </div>
+
+<div class="release-note-block">
+   <div class="meta">
+      <div class="badge stable">Stable</div>
+      <div class="release-date">June 27, 2016</div>
+   </div>
+   <div class="description gns3-document-styles">
+      <a href="/1gQa_s6bI3ltX5_EUbJ5gglxroXdHMXt3i2_rMJCG4jQ/index.html">
+         <h1>Version 1.5</h1>
+         <p>Version 1.5 add the support for Docker containers</p>
+         <p>A new file format for exchanging topologies is available.</p>
+      </a>
+   </div>
+</div>
+
+<div class="release-note-block">
+   <div class="meta">
+      <div class="badge stable">Stable</div>
+      <div class="release-date">January 12, 2016</div>
+   </div>
+   <div class="description gns3-document-styles">
+      <a href="/1E8V7wcENH7FV99N8y6rgMbtJFrUVyfwvq06cRpIa8NI/index.html">
+         <h1>Version 1.4</h1>
+         <p>Version 1.4 add the support for VMware VMs and the GNS3 VM.</p>
+         <p>A new file format allow users to import appliances</p>
+      </a>
+   </div>
+</div>
+
+<div class="release-note-block">
+   <div class="meta">
+      <div class="badge stable">Stable</div>
+      <div class="release-date">March 30, 2015</div>
+   </div>
+   <div class="description gns3-document-styles">
+     <h1>Version 1.3</h1>
+     <p>Version 1.3 is a new major release of GNS3 which brings major architectural changes increasing stability and easy to use.</p>
+   </div>
+</div>
+
 {% endblock %}

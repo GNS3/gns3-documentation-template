@@ -1,3 +1,54 @@
+@media screen and (max-width: 1100px) {
+   .explore-header {
+      height: 420px;
+
+      .search-input {
+         width: 100%;
+      }
+   }
+
+   .explore-content {
+      width: 100%;
+      padding: 0 18px;
+
+      a {
+         width: 100%;
+      }
+   }
+}
+
+@media screen and (min-width: 1100px) {
+   .explore-header {
+      height: 390px;
+
+      .search-input {
+         width: 360px;
+      }
+   }
+
+   .explore-content {
+      width: 900px;
+
+      a {
+         top: -24px;
+         margin-left: 30%;
+         width: 70%;
+         margin-right: 30px;
+      }
+
+      h2 {
+         top: 12px;
+         width: 25%;
+         margin-bottom: 12px;
+         color: #888;
+      }
+   }
+}
+
+//============================================================================
+// Explore Header
+//============================================================================
+
 .explore-header {
    display: block;
    position: relative;
@@ -5,7 +56,6 @@
    background: #000;
    background: linear-gradient(90deg, #205d78, #3888ab);
    text-align: center;
-   height: 390px;
    box-shadow: 12px 0px 30px rgba(0,0,0,0.6);
    color: #fff;
 
@@ -15,7 +65,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      padding: 120px 0 0 0;
+      padding: 120px 30px 0 30px;
    }
 
    .welcome-icon {
@@ -43,7 +93,6 @@
    .search-input {
       margin: auto;
       position: relative;
-      width: 360px;
       background: #fff;
       border-radius: 21px;
       padding: 12px 0;
@@ -72,18 +121,17 @@
    }
 }
 
+//============================================================================
+// Explore Content
+//============================================================================
+
 .explore-content {
-   width: 900px;
    margin: auto;
-   
+
    a {
       float: left;
-      margin-left: 30%;
-      width: 70%;
       position: relative;
-      top: -24px;
       color: #03A9F4;
-      margin-right: 30px;
       font-size: 18px;
       line-height: 30px;
       font-weight: 300;
@@ -112,8 +160,6 @@
 
    h2 {
       position: relative;
-      top: 12px;
-      width: 25%;
       text-transform: uppercase;
       font-size: 14px;
       line-height: 21px;
