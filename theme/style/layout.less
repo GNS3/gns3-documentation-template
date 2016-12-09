@@ -4,6 +4,9 @@
 
 @media screen and (max-width: 1100px) {
    #nav { display: none; }
+   .subheader {
+      .search-input { display: none; }
+   }
 }
 
 @media screen and (min-width: 1100px) {
@@ -34,6 +37,7 @@ body {
    background: rgba(0,0,0,0.6);
    font-family: 'Montserrat';
    text-transform: uppercase;
+   z-index: 11;
 
    &.welcome {
       background: rgba(0,0,0,0.3);
@@ -123,7 +127,6 @@ body {
 .gns3-wrapper {
    display: block;
    position: relative;
-   width: 720px;
    margin: auto;
    width: 100%;
 }

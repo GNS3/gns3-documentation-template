@@ -19,7 +19,7 @@
    </head>
    <body>
        <div id="header" class="{% block headerstyle %}{% endblock %}">
-         <a href="{{root}}/" id="logo">
+         <a href="https://gns3.com/" id="logo">
             <img src="{{root}}/theme/assets/images/logo-header.png" alt="GNS3 Documentation">
          </a>
          <div id="nav" class="mui3--t3c">
@@ -27,7 +27,7 @@
                <span class="title">Download</span>
             </a>
 
-            <a href="https://docs.gns3.com" data-section="support">
+            <a href="{{root}}/" data-section="support">
                <span class="title">Documentation</span>
             </a>
 
@@ -46,12 +46,12 @@
       </div>
 
       {% block main %}{% endblock %}
-   <script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script> 
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
    <script type="text/javascript"> docsearch({
    apiKey: 'a83755c0872ca3a1d4a8af1ad443d037',
    indexName: 'gns3',
    inputSelector: '.search'
-   }); 
+   });
    </script>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

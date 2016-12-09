@@ -1,3 +1,43 @@
+//============================================================================
+// Responsive
+//============================================================================
+
+@media screen and (max-width: 1100px) {
+   .gns3-document-toc {
+      display: none;
+   }
+
+   .gns3-document-main {
+      width: 100%;
+   }
+
+   .gns3-document-styles {
+      padding: 30px;
+
+      .image > img {
+        max-width: 100%;
+      }
+   }
+}
+
+@media screen and (min-width: 1100px) {
+   .gns3-document-main {
+      padding-left: 270px;
+   }
+
+   .gns3-document-styles {
+      padding: 60px 78px;
+
+      .image > img {
+        max-height: 400px;
+      }
+   }
+}
+
+//============================================================================
+// Document
+//============================================================================
+
 .gns3-document {
    float: left;
    width: 100%;
@@ -75,7 +115,6 @@
 
 .gns3-document-main {
    float: left;
-   padding-left: 270px;
 
    .button-edit {
       margin-top: 30px;
@@ -98,7 +137,6 @@
 }
 
 .gns3-document-styles {
-   padding: 60px 78px;
    font-weight: 300;
    position: relative;
 
@@ -184,10 +222,6 @@
     border-spacing: 0;
     border-collapse: collapse;
     margin-right: auto
-  }
-
-  .image > img {
-    max-height: 400px;
   }
 
   .code {

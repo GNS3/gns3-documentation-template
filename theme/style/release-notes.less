@@ -1,13 +1,53 @@
+//============================================================================
+// Responsive
+//============================================================================
+
+@media screen and (max-width: 1100px) {
+   .release-note-block {
+      float: left;
+      width: 100%;
+      padding: 30px;
+      border-bottom: 1px solid #eee;
+
+      .description {
+         width: 100%;
+         padding: 0px;
+      }
+
+      .meta {
+         width: 100%;
+      }
+   }
+}
+
+@media screen and (min-width: 1100px) {
+   .release-note-block {
+      width: 960px;
+
+      .description {
+         width: 70%;
+         border-left: 1px solid #ddd;
+         padding: 30px 60px 0px 60px;
+      }
+
+      .meta {
+         width: 30%;
+         padding: 60px;
+         text-align: right;
+      }
+   }
+}
+
+//============================================================================
+// Release Note Block
+//============================================================================
+
 .release-note-block {
    position: relative;
-   width: 960px;
    margin: auto;
 
    .description {
       float: left;
-      width: 70%;
-      border-left: 1px solid #ddd;
-      padding: 0px 60px;
 
       a {
          text-decoration: none;
@@ -16,9 +56,6 @@
 
    .meta {
       float: left;
-      width: 30%;
-      padding: 60px;
-      text-align: right;
       color: #03A9F4;
 
       .badge {
@@ -39,4 +76,3 @@
       }
    }
 }
-
