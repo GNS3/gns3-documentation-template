@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block headerstyle %}welcome{% endblock%}
+{% block main %}
+
+<div class="video-header">
+   <div class="headline">
+      <div class="icon ion-film-marker"></div>
+      <div class="title">GNS3 Videos</div>
+      <div class="subtitle">Tutorials, Guides & Training</div>
+   </div>
+</div>
+<div class="video-container"></div>
+
+
+<script type="text/javascript">
+   $(function(){
+      var url = 'https://vimeo.com/user33558546/videos/rss';
+
+      $.ajax({
+         type: "GET",
+         url: document.location.protocol + '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=1000&callback=?&q=' + encodeURIComponent(url),
+         dataType: 'json',
+         error: function(){
+            alert('Unable to load feed, Incorrect path or invalid feed');
+         },
+         success: function(xml){
+            var videos = xml.responseData.feed.entries;
+
+            for (var i = 0; i < videos.length; i++) {
+               var video = videos[i]
+               var thumbnail = video.mediaGroups[0].contents[0].thumbnails
+
+               $('.video-container').append('\
+                  <a href="'+ video.link +'" class="gns3-docs-video" target="_blank"> \
+                     <img src="'+ thumbnail[0].url +'" /> \
+                     <span class="info"> \
+                        <span class="title">'+ video.title +'</span> \
+                        <span class="date">'+ video.publishedDate.substring(0,16) +'</span> \
+                     </div> \
+                  </a> \
+               ')
+            }
+         }
+      })
+   })
+</script>
+{% endblock %}
