@@ -27,7 +27,7 @@ class FakeDocument:
         self.content = """
 <div>
 <p class="title" id="h.n9rpnjlpmr0w">Cisco ASA</p>
-<h1 id="h.1zcxdkbdbmy1">ASA 8</h1>
+<h1 id="h.1zcxdkbdbmy1"><a href="#h.1zcxdkbdbmy1">ASA 8</a></h1>
 <p class="warning"><strong>WARNING</strong><span>ASA 8&nbsp;IS NOT SUPPORTED</span></p>
 <p><strong></strong></p>
 <p>You may find a lot of tutorials on the Internet explaining how to extract ASA 8 images from physical hardware devices and use them with GNS3. This method was the only way to get an ASA image in the past, but the results are random; and getting worse with modern computers and operating systems. For example Windows 10 has multiple issues running ASA 8.</p>
@@ -35,12 +35,11 @@ class FakeDocument:
 <p>The problem with this way of doing things is that you are using an image made for a bespoke hardware device from Cisco. Qemu can emulate part of the hardware, but some components specific to a physical ASA are missing. For example, the hardware clock on the hardware ASA appliance is missing. The ASA kernel can sometimes replace it depending of the speed of your computer, but results may vary.</p>
 <p></p>
 <p>You will also encounter issues when running multiple ASAs simultaneously.</p>
-<h1 id="h.ctygta8hamgc"></h1>
-<h1 id="h.46g02c8z74m8">ASAv</h1>
+<h1 id="h.46g02c8z74m8"><a href="#h.46g02c8z74m8">ASAv</a></h1>
 <p>ASAv is a version of ASA made by Cisco for using ASA in virtualized environments. This the solution supported by Cisco and the GNS3 team.</p>
 <p></p>
 <p></p>
-<h2 id="h.lla7xvwpp5jv">ASAv with Qemu (RECOMMENDED)</h2>
+<h2 id="h.lla7xvwpp5jv"><a href="#h.lla7xvwpp5jv">ASAv with Qemu (RECOMMENDED)</a></h2>
 <p class="important"><strong>IMPORTANT</strong>Only images validated by VIRL team are known to work correctly with GNS3. &nbsp;</p>
 <p>Images <strong>asav952-204.qcow2</strong>&nbsp;or later are recommend (previous releases may not work). It is very important to use the correct ASA image because only this image (or a later image validated by VIRL) will work with GNS3. </p>
 <p></p>
