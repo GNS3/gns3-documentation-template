@@ -10,39 +10,31 @@
       <div class="subtitle">Tutorials, Guides & Training</div>
    </div>
 </div>
-<div class="video-container"></div>
+<div class="video-container">
+    {% for video in 'UCIIrom1ZESZ70aPJ2cLCsSA' | youtube_channel %}
+    <a href="https://www.youtube.com/watch?v={{video['id']}}" class="gns3-docs-video" target="_blank">
+        <img src="https://i1.ytimg.com/vi/{{video['id']}}/hqdefault.jpg">
+        <span class="info">
+            <span class="title">{{video['title']}}</span>
+            <span class="date">{{video['date'] | strftime("%B %-d, %Y")}}</span>
 
+        </span>
+        <a>
+    {% endfor %}
 
-<script type="text/javascript">
-   $(function(){
-      var url = 'https://vimeo.com/user33558546/videos/rss';
-
-      $.ajax({
-         type: "GET",
-         url: document.location.protocol + '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=1000&callback=?&q=' + encodeURIComponent(url),
-         dataType: 'json',
-         error: function(){
-            alert('Unable to load feed, Incorrect path or invalid feed');
-         },
-         success: function(xml){
-            var videos = xml.responseData.feed.entries;
-
-            for (var i = 0; i < videos.length; i++) {
-               var video = videos[i]
-               var thumbnail = video.mediaGroups[0].contents[0].thumbnails
-
-               $('.video-container').append('\
-                  <a href="'+ video.link +'" class="gns3-docs-video" target="_blank"> \
-                     <img src="'+ thumbnail[0].url +'" /> \
-                     <span class="info"> \
-                        <span class="title">'+ video.title +'</span> \
-                        <span class="date">'+ video.publishedDate.substring(0,16) +'</span> \
-                     </div> \
-                  </a> \
-               ')
-            }
-         }
-      })
-   })
-</script>
+    <a href="https://vimeo.com/189665008" class="gns3-docs-video" target="_blank">
+        <img src="https://i.vimeocdn.com/video/600061694_960.jpg">
+        <span class="info">
+            <span class="title">GNS3 Introduction Video</span>
+            <span class="date">Mon, 31 Oct 2016</span>
+        </span>
+    </a>
+    <a href="https://vimeo.com/109640856" class="gns3-docs-video" target="_blank">
+        <img src="https://i.vimeocdn.com/video/493638878_960.jpg">
+        <span class="info">
+            <span class="title">GNS3 Launch Video</span>
+            <span class="date">Tue, 21 Oct 2014</span>
+        </span>
+    </a>
+</div>
 {% endblock %}
