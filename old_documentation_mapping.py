@@ -43,6 +43,19 @@ if os.path.exists(path):
     shutil.rmtree(path)
 os.makedirs(path)
 
+with open(os.path.join(path, 'index.html'), "w+") as f:
+    f.write("""<!DOCTYPE HTML>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="refresh" content="0;url=https://docs.gns3.com/">
+        <title>Page Redirection</title>
+    </head>
+    <body>
+        If you are not redirected automatically, follow the <a href='https://docs.gns3.com/'>link</a>
+    </body>
+</html>""")
+
 for page_id, redirect_to in mappings:
     if redirect_to is None:
         redirect_to = ""
