@@ -21,7 +21,7 @@
     padding: 60px 78px;
   }
   .gns3-document-styles .image > img {
-    max-width: 600px;
+    max-width: 100%;
     max-height: 400px;
   }
 }
