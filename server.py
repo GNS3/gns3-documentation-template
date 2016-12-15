@@ -1,5 +1,7 @@
 from jinja2 import Environment, FileSystemLoader
 
+import os
+import hashlib
 import http.server
 import http.client
 import socketserver
@@ -29,6 +31,13 @@ def youtube_channel(channel_id):
             video['title'] = entry.find('{http://www.w3.org/2005/Atom}title').text
             videos.append(video)
     return videos
+
+
+def theme(asset_file):
+    h = hashlib.md5()
+    with open(os.path.join('theme', asset_file), 'rb') as f:
+        h.update(f.read())
+    return 'theme/' + asset_file + '?sum=' + h.hexdigest()
 
 
 class FakeDocument:
@@ -198,6 +207,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self._env = Environment(loader=FileSystemLoader('theme'))
         self._env.filters['strftime'] = strftime
         self._env.filters['youtube_channel'] = youtube_channel
+        self._env.filters['theme'] = theme
         super().__init__(*args)
 
     def render(self, template, root='.', **kwargs):
