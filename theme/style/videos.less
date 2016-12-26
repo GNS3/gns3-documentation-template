@@ -73,16 +73,30 @@
 .gns3-docs-video {
    float: left;
 
-   img {
+   &:hover {
+      .thumbnail {
+         border-color: #ccc;
+      }
+   }
+
+   .thumbnail {
       float: left;
       width: 100%;
+      height: 120px;
+      overflow: hidden;
+      background-size: cover;
+      background-position: center center;
+      border: 4px solid #eee;
+      transition: 300ms;
    }
 
    .info {
       float: left;
       width: 100%;
+      height: 120px;
       padding: 24px 0;
       text-align: center;
+      font-size: 13px;
    }
 
    .title {
