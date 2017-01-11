@@ -1,1 +1,6 @@
 .DS_Store
+configs
+.cache
+__pycache__
+*.pyc
+export
