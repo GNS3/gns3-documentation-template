@@ -30,6 +30,37 @@
   width: 100%;
   position: relative;
 }
+.gns3-document .button-edit {
+  margin-top: 30px;
+  display: inline-block;
+  padding: 9px 30px;
+  color: #fff;
+  background: #00E676;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 11px;
+  font-family: 'Montserrat';
+  text-transform: uppercase;
+  border-radius: 18px;
+  transition: 300ms;
+}
+.gns3-document .button-edit:hover {
+  background: #69F0AE;
+}
+@media screen and (max-width: 1280px) {
+  .gns3-document .meta-left {
+    border-top: 1px solid #B3E5FC;
+    padding-top: 12px;
+    color: #546E7A;
+    font-size: 13px;
+    line-height: 18px;
+  }
+}
+@media screen and (min-width: 1281px) {
+  .gns3-document .meta-left {
+    display: none;
+  }
+}
 .doc-icon {
   display: inline-block;
   width: 48px;
@@ -93,29 +124,12 @@
 .gns3-document-main {
   float: left;
 }
-.gns3-document-main .button-edit {
-  margin-top: 30px;
-  display: inline-block;
-  padding: 9px 30px;
-  color: #fff;
-  background: #00E676;
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 11px;
-  font-family: 'Montserrat';
-  text-transform: uppercase;
-  border-radius: 18px;
-  transition: 300ms;
-}
-.gns3-document-main .button-edit:hover {
-  background: #69F0AE;
-}
 .gns3-document-styles {
   font-weight: 300;
   position: relative;
 }
 @media screen and (max-width: 1280px) {
-  .gns3-document-styles .meta {
+  .gns3-document-styles .meta-right {
     display: none;
   }
 }
@@ -123,7 +137,7 @@
   .gns3-document-styles {
     padding-right: 360px;
   }
-  .gns3-document-styles .meta {
+  .gns3-document-styles .meta-right {
     position: absolute;
     right: 0;
     top: 72px;
