@@ -44,6 +44,42 @@
    float: left;
    width: 100%;
    position: relative;
+
+
+    .button-edit {
+      margin-top: 30px;
+      display: inline-block;
+      padding: 9px 30px;
+      color: #fff;
+      background: #00E676;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 11px;
+      font-family: 'Montserrat';
+      text-transform: uppercase;
+      border-radius: 18px;
+      transition: 300ms;
+
+      &:hover {
+         background: #69F0AE;
+      }
+   }
+
+   @media screen and (max-width: 1280px) {
+      .meta-left {
+        border-top: 1px solid #B3E5FC;
+        padding-top: 12px;
+        color: #546E7A;
+        font-size: 13px;
+        line-height: 18px;
+      }
+   }
+
+   @media screen and (min-width: 1281px) {
+      .meta-left {
+         display: none;
+      }
+   }
 }
 
 .doc-icon {
@@ -117,25 +153,6 @@
 
 .gns3-document-main {
    float: left;
-
-   .button-edit {
-      margin-top: 30px;
-      display: inline-block;
-      padding: 9px 30px;
-      color: #fff;
-      background: #00E676;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 11px;
-      font-family: 'Montserrat';
-      text-transform: uppercase;
-      border-radius: 18px;
-      transition: 300ms;
-
-      &:hover {
-         background: #69F0AE;
-      }
-   }
 }
 
 .gns3-document-styles {
@@ -143,7 +160,7 @@
    position: relative;
 
    @media screen and (max-width: 1280px) {
-      .meta {
+      .meta-right {
          display: none;
       }
    }
@@ -151,7 +168,7 @@
    @media screen and (min-width: 1281px) {
       padding-right: 360px;
 
-      .meta {
+      .meta-right {
          position: absolute;
          right: 0;
          top: 72px;
@@ -164,6 +181,7 @@
          color: #777;
       }
    }
+
 
    .title {
       font-size: 48px;
