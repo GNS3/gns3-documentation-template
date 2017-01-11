@@ -19,7 +19,7 @@ log = logging.getLogger(__name__)
 
 
 class DriveDocument:
-    def __init__(self, id, title, data, export_dir, authors=[], modifiedTime=None, theme=None, editable_by_anyone=False, template='document', config={}):
+    def __init__(self, id, title, data, export_dir, authors=[], modifiedTime=None, theme=None, editable_by_anyone=False, template='document', appliances=None, config={}):
         log.info('Process document %s %s', id, title)
         if theme is None:
             self._theme = Theme(export_dir)
@@ -33,6 +33,7 @@ class DriveDocument:
         self._modifiedTime = modifiedTime
         self._data = data
         self._title = title
+        self._appliances = appliances
         self._id = id
         self._html = lxml.html.fromstring(self._data)
         text = html_to_text(self._data)
@@ -155,7 +156,7 @@ class DriveDocument:
             del body.attrib['style']
 
         self._content = lxml.etree.tostring(body, pretty_print=True, method="html")
-        return self._theme.render(self._template + '.html', document=self, root=root, config=self._config), files
+        return self._theme.render(self._template + '.html', document=self, root=root, config=self._config, appliances=self._appliances), files
 
     def _wrap_images(self):
         """

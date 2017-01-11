@@ -7,6 +7,7 @@ import http.client
 import socketserver
 import datetime
 
+from drive.appliances import get_appliances
 
 PORT = 8000
 
@@ -208,6 +209,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self._env.filters['strftime'] = strftime
         self._env.filters['youtube_channel'] = youtube_channel
         self._env.filters['theme'] = theme
+        self._appliances = get_appliances()
         super().__init__(*args)
 
     def render(self, template, root='.', **kwargs):
@@ -215,7 +217,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Content-type','text/html')
         self.end_headers()
-        self.wfile.write(template.render(root=root, lastModifiedTime=datetime.datetime.now(), config={"title": "GNS3"}, **kwargs).encode("utf-8"))
+        self.wfile.write(template.render(root=root, lastModifiedTime=datetime.datetime.now(), config={"title": "GNS3"}, appliances=self._appliances, **kwargs).encode("utf-8"))
 
     def do_GET(self):
         if self.path == "/" or self.path == "/index.html":
@@ -228,12 +230,16 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             return self.render("release.html", root='..', document=FakeReleaseDocument())
         elif self.path.startswith("/1") and self.path.endswith("/index.html"):
             return self.render("document.html", root="..", document=FakeDocument())
+        elif self.path.startswith("/appliances"):
+            appliance_id = self.path.split("/")[-1:][0].split(".")[0]
+            return self.render("appliance.html", root="..", appliance=self._appliances[appliance_id], appliance_id=appliance_id)
         return super().do_GET()
 
 httpd = socketserver.TCPServer(("", PORT), Handler)
 print("Serving at port", PORT)
 
 try:
+    httpd.allow_reuse_address = True
     httpd.serve_forever()
 except KeyboardInterrupt:
     print('^C received, shutting down the web server')
