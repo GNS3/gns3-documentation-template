@@ -18,7 +18,7 @@ from oauth2client import tools
 
 import jinja2.exceptions
 
-from .appliances import get_appliances
+from ..appliances import get_appliances
 from .document import DriveDocument
 from .utils import process_link
 from .theme import Theme

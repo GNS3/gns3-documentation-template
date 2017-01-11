@@ -7,7 +7,7 @@ import http.client
 import socketserver
 import datetime
 
-from drive.appliances import get_appliances
+from appliances import get_appliances
 
 PORT = 8000
 
