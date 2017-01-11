@@ -18,7 +18,7 @@ from oauth2client import tools
 
 import jinja2.exceptions
 
-
+from ..appliances import get_appliances
 from .document import DriveDocument
 from .utils import process_link
 from .theme import Theme
@@ -51,7 +51,8 @@ class Drive:
                                  modifiedTime=modifiedTime,
                                  theme=self._theme,
                                  editable_by_anyone=editable_by_anyone,
-                                 config=self._config)
+                                 config=self._config,
+                                 appliances=self._appliances)
 
     @retry(wait_exponential_multiplier=1000, stop_max_attempt_number=10)
     def _callback_document_authors(self, request_id, results, exception):
@@ -78,6 +79,8 @@ class Drive:
         self._theme = Theme(export_dir)
         self._export_dir = export_dir
         self._config = config
+
+        self._appliances = get_appliances()
 
         credentials = self._get_credentials(config)
         http = credentials.authorize(httplib2.Http(cache=".cache"))
@@ -145,24 +148,20 @@ class Drive:
         for document in self._documents.values():
             document.export()
 
+        for appliance_id, appliance in self._appliances.items():
+            content = self._theme.render('appliance.html', appliance=appliance, appliance_id=appliance_id, root="..")
+            os.makedirs(os.path.join(export_dir, 'appliances'), exist_ok=True)
+            with open(os.path.join(export_dir, 'appliances', appliance_id + '.html'), 'wb+') as f:
+                f.write(content.encode('utf-8'))
+
         for file in os.listdir('theme'):
             if (file.endswith('.html') or file.endswith('.txt')) and file not in ['document.html', 'base.html']:
                 try:
-                    content = self._theme.render(file, lastModifiedTime=last_modified_time)
+                    content = self._theme.render(file, lastModifiedTime=last_modified_time, appliances=self._appliances)
                     with open(os.path.join(export_dir, file), 'wb+') as f:
                         f.write(content.encode('utf-8'))
                 except jinja2.exceptions.TemplateRuntimeError:
                     pass # Not a template for global rendering
-
-        if os.path.exists(os.path.join(export_dir, 'theme')):
-            for file in os.listdir(os.path.join(export_dir, 'theme')):
-                if (file.endswith('.html') or file.endswith('.txt')) and file not in ['document.html', 'base.html']:
-                    try:
-                        content = self._theme.render(file, lastModifiedTime=last_modified_time)
-                        with open(os.path.join(export_dir, file), 'wb+') as f:
-                            f.write(content.encode('utf-8'))
-                    except jinja2.exceptions.TemplateRuntimeError:
-                        pass # Not a template for global rendering
 
         print('Export finish file are inside', export_dir)
 

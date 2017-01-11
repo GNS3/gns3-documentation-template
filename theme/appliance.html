@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}{{appliance['name']}} appliance - GNS3{% endblock %}
+
+{% block main %}
+<div class="header-push"></div>
+<div class="subheader">
+   <div class="breadcrumb">
+       <a href="{{root}}/">
+         <b>Documentation</b>
+      </a>
+      &nbsp; /  &nbsp;
+      <a href="{{root}}/1FFbs5hOBbx8O855KxLetlCwlbymTN8L1zXXQzCqfmy4/index.html#h.appliances">
+          Appliances
+      </a>
+      &nbsp; /  &nbsp;
+      <a href="#">{{appliance['name']}}</a>
+   </div>
+   <div class="search-input">
+      <div class="icon ion-android-search"></div>
+      <input type="text" placeholder="Search Documentation" class="search">
+   </div>
+</div>
+
+<div class="gns3-document">
+    <div class="gns3-document-toc">
+        <h1>
+            <a href="#appliance_install">How to install</a>
+        </h1>
+        <h1>
+            <a href="#appliance_usage">Appliance usage</a>
+        </h1>
+        <h1>
+            <a href="#appliance_supported">Version supported</a>
+        </h1>
+        {% for version in appliance['versions'] %}
+            <h2>
+                <a href="#appliance_{{version["name"]}}">{{appliance['name']}} {{version["name"]}}</a>
+            </h2>
+        {% endfor %}
+    </div>
+    <div class="gns3-document-main">
+      <div class="gns3-wrapper gns3-document-styles">
+         <div>
+            <div class="doc-icon icon ion-ios-gear"></div>
+            <p class="title">{{appliance['name']}} appliance</h1>
+            <p>{{appliance['description']}}</p>
+            
+            <h1 id="appliance_install">How to install</h1>
+            <ul>
+                <li>Download the appliance file: <a href="https://gns3.com/external/download?url={{ ("https://raw.githubusercontent.com/GNS3/gns3-registry/master/appliances/" + appliance_id + ".gns3a") | urlencode }}">here</a></li>
+                <li>Download the files one of the supported version <a href="#appliance_supported">here</a></li>
+                <li>Import it in GNS3. <a href="{{root}}/1MAdxz0BSEAfGM7tA-w-o3TMmf8XOx7nBf0z6d9nRz_c/index.html">You can follow this tutorial</a></li>
+            </ul>
+            
+            <a href="{{root}}/1MAdxz0BSEAfGM7tA-w-o3TMmf8XOx7nBf0z6d9nRz_c/index.html"></a>
+
+            <h1 id="appliance_usage">Appliance usage</h1>
+            <p>{{appliance['usage']}}</p>
+            
+            <h1 id="appliance_supported">Version supported</h1>
+            {% for version in appliance['versions'] %}
+                <h2 id="appliance_{{version["name"]}}">{{appliance['name']}} {{version["name"]}}</h2>
+                <h3>Images require</h3>
+                <table>
+                    <tr>
+                        <td>File</td>
+                        <td></td>
+                    </tr>
+                    {% for key, filename in version["images"].items() %}
+                        {% for image in appliance["images"] %}
+                            {% if image["filename"] == filename %}
+                                <tr>
+                                    <td>{{filename}}</td>
+                                    <td>
+                                        {% if "direct_download_url" in image %}
+                                            <a href="{{image["direct_download_url"]}}">Download</a>
+                                        {% elif "download_url" in image %}
+                                            <a href="{{image["download_url"]}}">Download</a>
+                                        {% else %}
+                                            No download link available
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </table>
+            {% endfor %}
+         <div>
+      </div>
+   </div>
+</div>
+{% endblock %}
