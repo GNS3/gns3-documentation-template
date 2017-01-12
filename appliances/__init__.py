@@ -34,7 +34,9 @@ def get_appliances():
         if path.endswith('.gns3a'):
             with z.open(path, 'r') as f:
                 id = os.path.basename(path).split('.')[0]
-                appliances[id] = json.loads(f.read().decode())
+                appliance = json.loads(f.read().decode())
+                if appliance["status"] != "broken":
+                    appliances[id] = appliance
     return appliances
 
 if __name__ == '__main__':
