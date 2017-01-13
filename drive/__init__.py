@@ -18,7 +18,7 @@ from oauth2client import tools
 
 import jinja2.exceptions
 
-from ..appliances import get_appliances
+from .appliances import get_appliances
 from .document import DriveDocument
 from .utils import process_link
 from .theme import Theme
@@ -46,13 +46,15 @@ class Drive:
             template = item['description'].split(':')[1].strip()
 
         modifiedTime = datetime.datetime.strptime(item['modifiedTime'], "%Y-%m-%dT%H:%M:%S.%fZ")
-        self._documents[item['id']] = DriveDocument(item['id'], item['name'], data, self._export_dir,
+        document = DriveDocument(item['id'], item['name'], data, self._export_dir,
                                  template=template,
                                  modifiedTime=modifiedTime,
                                  theme=self._theme,
                                  editable_by_anyone=editable_by_anyone,
                                  config=self._config,
                                  appliances=self._appliances)
+        self._documents[item['id']] = document
+        self._documents_name[item['name']] = document
 
     @retry(wait_exponential_multiplier=1000, stop_max_attempt_number=10)
     def _callback_document_authors(self, request_id, results, exception):
@@ -96,6 +98,7 @@ class Drive:
 
         self._document_items = {} # Google Drive document
         self._documents = {} # Final document object
+        self._documents_name = {}
 
         batch = self._service.new_batch_http_request(callback=self._callback_document_exported)
         request_id = 0
@@ -149,7 +152,10 @@ class Drive:
             document.export()
 
         for appliance_id, appliance in self._appliances.items():
-            content = self._theme.render('appliance.html', appliance=appliance, appliance_id=appliance_id, root="..")
+            document = None
+            if appliance_id in self._documents_name:
+                document = self._documents_name[appliance_id]
+            content = self._theme.render('appliance.html', appliance=appliance, appliance_id=appliance_id, root="..", document=document)
             os.makedirs(os.path.join(export_dir, 'appliances'), exist_ok=True)
             with open(os.path.join(export_dir, 'appliances', appliance_id + '.html'), 'wb+') as f:
                 f.write(content.encode('utf-8'))
