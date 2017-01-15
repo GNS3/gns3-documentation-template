@@ -4,3 +4,4 @@ configs
 __pycache__
 *.pyc
 export
+.authors_cache

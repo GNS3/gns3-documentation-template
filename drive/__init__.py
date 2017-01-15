@@ -70,6 +70,26 @@ class Drive:
         authors = list(authors)
         authors.sort()
         self._documents[file_id].authors = authors
+        item = self._documents[file_id]
+        self._write_author_to_cache(file_id, self._documents[file_id].modifiedTime, authors)
+
+    def _get_authors_from_cache(self, document_id, modifiedTime):
+        if self._authors_cache is None:
+            try:
+                with open(".authors_cache") as f:
+                    self._authors_cache = json.load(f)
+            except OSError:
+                self._authors_cache = {}
+        if document_id in self._authors_cache and self._authors_cache[document_id]["modifiedTime"] == modifiedTime.timestamp():
+            return self._authors_cache[document_id]["authors"]
+        return None
+
+    def _write_author_to_cache(self, document_id, modifiedTime, authors):
+        if self._authors_cache is None:
+            self._authors_cache = {}
+        self._authors_cache[document_id] = {"authors": authors, "modifiedTime": modifiedTime.timestamp()}
+        with open(".authors_cache", "w+") as f:
+            json.dump(self._authors_cache, f)
 
     def process(self, config, export_dir, only_document_ids=[]):
         """
@@ -99,6 +119,7 @@ class Drive:
         self._document_items = {} # Google Drive document
         self._documents = {} # Final document object
         self._documents_name = {}
+        self._authors_cache = None
 
         batch = self._service.new_batch_http_request(callback=self._callback_document_exported)
         request_id = 0
@@ -127,7 +148,7 @@ class Drive:
                             self._document_items[str(request_id)] = item
                             request_id += 1
                         elif item['mimeType'] == 'application/vnd.google-apps.folder':
-                            if not item['name'].startswith('.'):
+                            if not item['name'].startswith('.') and item['id'] not in processed_ids:
                                 documents_id.add((os.path.join(parent, item['name']), item['id'], ))
                         # else:
                         #     # Export other file directly to the disk
@@ -135,17 +156,21 @@ class Drive:
                         #     os.makedirs(os.path.join(export_dir, parent), exist_ok=True)
                         #     with open(os.path.join(export_dir, parent, item['name']), 'wb+') as f:
                         #         f.write(data)
-
                 request = files_api.list_next(request, results)
+
 
         batch.execute(http=http)
 
         # Batch requests for getting document authors
         batch = self._service.new_batch_http_request(callback=self._callback_document_authors)
         for document in self._documents.values():
-            batch.add(self._revision_api.list(fields="nextPageToken, revisions(lastModifyingUser(displayName))", fileId=document.id, pageSize=1000), request_id=str(request_id))
-            self._document_items[str(request_id)] = document.id
-            request_id += 1
+            authors = self._get_authors_from_cache(document.id, document.modifiedTime)
+            if authors:
+                document.authors = authors
+            else:
+                batch.add(self._revision_api.list(fields="nextPageToken, revisions(lastModifyingUser(displayName))", fileId=document.id, pageSize=1000), request_id=str(request_id))
+                self._document_items[str(request_id)] = document.id
+                request_id += 1
         batch.execute(http=http)
 
         for document in self._documents.values():

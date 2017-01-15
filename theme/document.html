@@ -27,7 +27,6 @@
                 <a href="index.html#{{toc['id']}}">{{toc['text']}}</a>
              </h{{toc['level']}}>
          {% endfor %}
-         {% block toc_bottom %}{% endblock %}
          
          <div class="meta-left">
             {% if document.modifiedTime %}
@@ -46,7 +45,8 @@
                 <a href="https://docs.google.com/document/d/{{document.id}}/edit" class="button-edit">Edit this Article</a>
             {% endif %}
         {% endif %}
-     </div>
+        </div>
+    {% block toc_bottom %}{% endblock %}
    </div>
    <div class="gns3-document-main">
       <div class="gns3-wrapper gns3-document-styles">
