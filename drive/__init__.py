@@ -31,6 +31,32 @@ APPLICATION_NAME = 'Docxel'
 
 
 class Drive:
+    def __init__(self, config):
+        self._config = config
+
+        credentials = self._get_credentials(config)
+        self._http = credentials.authorize(httplib2.Http(cache=".cache"))
+        self._service = discovery.build('drive', 'v3', http=self._http)
+        self._appliances = get_appliances()
+
+    def create_appliance_documents(self):
+        document_id = '0B62b0ANNLa3QVk9GczRpRXBOeHM'
+        files_api = self._service.files()
+        search = "'{}' in parents".format(document_id)
+        request = files_api.list(fields="nextPageToken, files(name)", q=search, pageSize=1000)
+        names = set()
+        while request is not None:
+            results = request.execute()
+            items = results.get('files', [])
+            if items:
+                for item in items:
+                    names.add(item['name'])
+            request = files_api.list_next(request, results)
+        for appliance in self._appliances.keys():
+            if appliance not in names:
+                fileMetadata = {'name': appliance, 'parents': [document_id], 'mimeType': 'application/vnd.google-apps.document'}
+                files_api.create(body=fileMetadata).execute()
+
     @retry(wait_exponential_multiplier=1000, stop_max_attempt_number=10)
     def _callback_document_exported(self, request_id, data, exception):
         if exception:
@@ -91,7 +117,7 @@ class Drive:
         with open(".authors_cache", "w+") as f:
             json.dump(self._authors_cache, f)
 
-    def process(self, config, export_dir, only_document_ids=[]):
+    def process(self, export_dir, only_document_ids=[]):
         """
         :params only_document_id: Process only this document (For speedup tests)
         """
@@ -100,16 +126,9 @@ class Drive:
         #self._copy_ressources(export_dir)
         self._theme = Theme(export_dir)
         self._export_dir = export_dir
-        self._config = config
-
-        self._appliances = get_appliances()
-
-        credentials = self._get_credentials(config)
-        http = credentials.authorize(httplib2.Http(cache=".cache"))
-        self._service = discovery.build('drive', 'v3', http=http)
 
         documents_id = set()
-        documents_id.add((".", config['folder_id'], ))
+        documents_id.add((".", self._config['folder_id'], ))
         processed_ids = set()
         documents = []
         files_api = self._service.files()
@@ -159,7 +178,7 @@ class Drive:
                 request = files_api.list_next(request, results)
 
 
-        batch.execute(http=http)
+        batch.execute(http=self._http)
 
         # Batch requests for getting document authors
         batch = self._service.new_batch_http_request(callback=self._callback_document_authors)
@@ -171,7 +190,7 @@ class Drive:
                 batch.add(self._revision_api.list(fields="nextPageToken, revisions(lastModifyingUser(displayName))", fileId=document.id, pageSize=1000), request_id=str(request_id))
                 self._document_items[str(request_id)] = document.id
                 request_id += 1
-        batch.execute(http=http)
+        batch.execute(http=self._http)
 
         for document in self._documents.values():
             document.export()
