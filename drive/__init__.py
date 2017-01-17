@@ -2,6 +2,7 @@ import httplib2
 import datetime
 import argparse
 import string
+import base64
 import shutil
 import json
 import lxml
@@ -64,6 +65,10 @@ class Drive:
             raise exception
 
         item = self._document_items[request_id]
+        self._build_document(item, data)
+        self._write_to_cache(item['id'], self._documents[item['id']].modifiedTime, base64.b64encode(data).decode())
+
+    def _build_document(self, item, data):
         try:
             editable_by_anyone = self._permissions_for_anyone(item)
         except KeyError:
@@ -97,25 +102,25 @@ class Drive:
         authors.sort()
         self._documents[file_id].authors = authors
         item = self._documents[file_id]
-        self._write_author_to_cache(file_id, self._documents[file_id].modifiedTime, authors)
+        self._write_to_cache(file_id + '_authors', self._documents[file_id].modifiedTime, authors)
 
-    def _get_authors_from_cache(self, document_id, modifiedTime):
-        if self._authors_cache is None:
+    def _get_from_cache(self, document_id, modifiedTime):
+        if self._cache is None:
             try:
-                with open(".authors_cache") as f:
-                    self._authors_cache = json.load(f)
+                with open(".data_cache") as f:
+                    self._cache = json.load(f)
             except OSError:
-                self._authors_cache = {}
-        if document_id in self._authors_cache and self._authors_cache[document_id]["modifiedTime"] == modifiedTime.timestamp():
-            return self._authors_cache[document_id]["authors"]
+                self._cache = {}
+        if document_id in self._cache and self._cache[document_id]["modifiedTime"] == modifiedTime.timestamp():
+            return self._cache[document_id]["data"]
         return None
 
-    def _write_author_to_cache(self, document_id, modifiedTime, authors):
-        if self._authors_cache is None:
-            self._authors_cache = {}
-        self._authors_cache[document_id] = {"authors": authors, "modifiedTime": modifiedTime.timestamp()}
-        with open(".authors_cache", "w+") as f:
-            json.dump(self._authors_cache, f)
+    def _write_to_cache(self, document_id, modifiedTime, data):
+        if self._cache is None:
+            self._cache = {}
+        self._cache[document_id] = {"data": data, "modifiedTime": modifiedTime.timestamp()}
+        with open(".data_cache", "w+") as f:
+            json.dump(self._cache, f)
 
     def process(self, export_dir, only_document_ids=[]):
         """
@@ -138,7 +143,7 @@ class Drive:
         self._document_items = {} # Google Drive document
         self._documents = {} # Final document object
         self._documents_name = {}
-        self._authors_cache = None
+        self._cache = None
 
         batch = self._service.new_batch_http_request(callback=self._callback_document_exported)
         request_id = 0
@@ -163,9 +168,14 @@ class Drive:
                             modifiedTime = datetime.datetime.strptime(item['modifiedTime'], "%Y-%m-%dT%H:%M:%S.%fZ")
                             if last_modified_time is None or modifiedTime > last_modified_time:
                                 last_modified_time = modifiedTime
-                            batch.add(files_api.export(fileId=item['id'], mimeType="text/html"), request_id=str(request_id))
-                            self._document_items[str(request_id)] = item
-                            request_id += 1
+                            data = self._get_from_cache(item['id'], modifiedTime)
+                            if data is None:
+                                batch.add(files_api.export(fileId=item['id'], mimeType="text/html"), request_id=str(request_id))
+                                self._document_items[str(request_id)] = item
+                                request_id += 1
+                            else:
+                                print("Get document from cache")
+                                self._build_document(item, base64.b64decode(data))
                         elif item['mimeType'] == 'application/vnd.google-apps.folder':
                             if not item['name'].startswith('.') and item['id'] not in processed_ids:
                                 documents_id.add((os.path.join(parent, item['name']), item['id'], ))
@@ -183,7 +193,7 @@ class Drive:
         # Batch requests for getting document authors
         batch = self._service.new_batch_http_request(callback=self._callback_document_authors)
         for document in self._documents.values():
-            authors = self._get_authors_from_cache(document.id, document.modifiedTime)
+            authors = self._get_from_cache(document.id + '_authors', document.modifiedTime)
             if authors:
                 document.authors = authors
             else:

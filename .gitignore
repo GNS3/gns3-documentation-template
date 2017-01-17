@@ -5,3 +5,4 @@ __pycache__
 *.pyc
 export
 .authors_cache
+.data_cache
