@@ -57,9 +57,10 @@ class Drive:
                 fileMetadata = {'name': appliance, 'parents': [document_id], 'mimeType': 'application/vnd.google-apps.document'}
                 files_api.create(body=fileMetadata).execute()
 
-    @retry(wait_exponential_multiplier=1000, stop_max_attempt_number=10)
+    @retry(wait_exponential_multiplier=1000, stop_max_attempt_number=2)
     def _callback_document_exported(self, request_id, data, exception):
         if exception:
+            print(exception)
             raise exception
 
         item = self._document_items[request_id]
@@ -82,7 +83,6 @@ class Drive:
         self._documents[item['id']] = document
         self._documents_name[item['name']] = document
 
-    @retry(wait_exponential_multiplier=1000, stop_max_attempt_number=10)
     def _callback_document_authors(self, request_id, results, exception):
         if exception:
             raise exception
