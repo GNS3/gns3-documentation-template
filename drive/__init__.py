@@ -2,6 +2,7 @@ import httplib2
 import datetime
 import argparse
 import string
+import base64
 import shutil
 import json
 import lxml
@@ -18,7 +19,7 @@ from oauth2client import tools
 
 import jinja2.exceptions
 
-from ..appliances import get_appliances
+from .appliances import get_appliances
 from .document import DriveDocument
 from .utils import process_link
 from .theme import Theme
@@ -31,12 +32,43 @@ APPLICATION_NAME = 'Docxel'
 
 
 class Drive:
-    @retry(wait_exponential_multiplier=1000, stop_max_attempt_number=10)
+    def __init__(self, config):
+        self._config = config
+
+        credentials = self._get_credentials(config)
+        self._http = credentials.authorize(httplib2.Http(cache=".cache"))
+        self._service = discovery.build('drive', 'v3', http=self._http)
+        self._appliances = get_appliances()
+
+    def create_appliance_documents(self):
+        document_id = '0B62b0ANNLa3QVk9GczRpRXBOeHM'
+        files_api = self._service.files()
+        search = "'{}' in parents".format(document_id)
+        request = files_api.list(fields="nextPageToken, files(name)", q=search, pageSize=1000)
+        names = set()
+        while request is not None:
+            results = request.execute()
+            items = results.get('files', [])
+            if items:
+                for item in items:
+                    names.add(item['name'])
+            request = files_api.list_next(request, results)
+        for appliance in self._appliances.keys():
+            if appliance not in names:
+                fileMetadata = {'name': appliance, 'parents': [document_id], 'mimeType': 'application/vnd.google-apps.document'}
+                files_api.create(body=fileMetadata).execute()
+
+    @retry(wait_exponential_multiplier=1000, stop_max_attempt_number=2)
     def _callback_document_exported(self, request_id, data, exception):
         if exception:
+            print(exception)
             raise exception
 
         item = self._document_items[request_id]
+        self._build_document(item, data)
+        self._write_to_cache(item['id'], self._documents[item['id']].modifiedTime, base64.b64encode(data).decode())
+
+    def _build_document(self, item, data):
         try:
             editable_by_anyone = self._permissions_for_anyone(item)
         except KeyError:
@@ -46,15 +78,16 @@ class Drive:
             template = item['description'].split(':')[1].strip()
 
         modifiedTime = datetime.datetime.strptime(item['modifiedTime'], "%Y-%m-%dT%H:%M:%S.%fZ")
-        self._documents[item['id']] = DriveDocument(item['id'], item['name'], data, self._export_dir,
+        document = DriveDocument(item['id'], item['name'], data, self._export_dir,
                                  template=template,
                                  modifiedTime=modifiedTime,
                                  theme=self._theme,
                                  editable_by_anyone=editable_by_anyone,
                                  config=self._config,
                                  appliances=self._appliances)
+        self._documents[item['id']] = document
+        self._documents_name[item['name']] = document
 
-    @retry(wait_exponential_multiplier=1000, stop_max_attempt_number=10)
     def _callback_document_authors(self, request_id, results, exception):
         if exception:
             raise exception
@@ -68,8 +101,28 @@ class Drive:
         authors = list(authors)
         authors.sort()
         self._documents[file_id].authors = authors
+        item = self._documents[file_id]
+        self._write_to_cache(file_id + '_authors', self._documents[file_id].modifiedTime, authors)
 
-    def process(self, config, export_dir, only_document_ids=[]):
+    def _get_from_cache(self, document_id, modifiedTime):
+        if self._cache is None:
+            try:
+                with open(".data_cache") as f:
+                    self._cache = json.load(f)
+            except OSError:
+                self._cache = {}
+        if document_id in self._cache and self._cache[document_id]["modifiedTime"] == modifiedTime.timestamp():
+            return self._cache[document_id]["data"]
+        return None
+
+    def _write_to_cache(self, document_id, modifiedTime, data):
+        if self._cache is None:
+            self._cache = {}
+        self._cache[document_id] = {"data": data, "modifiedTime": modifiedTime.timestamp()}
+        with open(".data_cache", "w+") as f:
+            json.dump(self._cache, f)
+
+    def process(self, export_dir, only_document_ids=[]):
         """
         :params only_document_id: Process only this document (For speedup tests)
         """
@@ -78,16 +131,9 @@ class Drive:
         #self._copy_ressources(export_dir)
         self._theme = Theme(export_dir)
         self._export_dir = export_dir
-        self._config = config
-
-        self._appliances = get_appliances()
-
-        credentials = self._get_credentials(config)
-        http = credentials.authorize(httplib2.Http(cache=".cache"))
-        self._service = discovery.build('drive', 'v3', http=http)
 
         documents_id = set()
-        documents_id.add((".", config['folder_id'], ))
+        documents_id.add((".", self._config['folder_id'], ))
         processed_ids = set()
         documents = []
         files_api = self._service.files()
@@ -96,6 +142,8 @@ class Drive:
 
         self._document_items = {} # Google Drive document
         self._documents = {} # Final document object
+        self._documents_name = {}
+        self._cache = None
 
         batch = self._service.new_batch_http_request(callback=self._callback_document_exported)
         request_id = 0
@@ -120,11 +168,16 @@ class Drive:
                             modifiedTime = datetime.datetime.strptime(item['modifiedTime'], "%Y-%m-%dT%H:%M:%S.%fZ")
                             if last_modified_time is None or modifiedTime > last_modified_time:
                                 last_modified_time = modifiedTime
-                            batch.add(files_api.export(fileId=item['id'], mimeType="text/html"), request_id=str(request_id))
-                            self._document_items[str(request_id)] = item
-                            request_id += 1
+                            data = self._get_from_cache(item['id'], modifiedTime)
+                            if data is None:
+                                batch.add(files_api.export(fileId=item['id'], mimeType="text/html"), request_id=str(request_id))
+                                self._document_items[str(request_id)] = item
+                                request_id += 1
+                            else:
+                                print("Get document from cache")
+                                self._build_document(item, base64.b64decode(data))
                         elif item['mimeType'] == 'application/vnd.google-apps.folder':
-                            if not item['name'].startswith('.'):
+                            if not item['name'].startswith('.') and item['id'] not in processed_ids:
                                 documents_id.add((os.path.join(parent, item['name']), item['id'], ))
                         # else:
                         #     # Export other file directly to the disk
@@ -132,24 +185,31 @@ class Drive:
                         #     os.makedirs(os.path.join(export_dir, parent), exist_ok=True)
                         #     with open(os.path.join(export_dir, parent, item['name']), 'wb+') as f:
                         #         f.write(data)
-
                 request = files_api.list_next(request, results)
 
-        batch.execute(http=http)
+
+        batch.execute(http=self._http)
 
         # Batch requests for getting document authors
         batch = self._service.new_batch_http_request(callback=self._callback_document_authors)
         for document in self._documents.values():
-            batch.add(self._revision_api.list(fields="nextPageToken, revisions(lastModifyingUser(displayName))", fileId=document.id, pageSize=1000), request_id=str(request_id))
-            self._document_items[str(request_id)] = document.id
-            request_id += 1
-        batch.execute(http=http)
+            authors = self._get_from_cache(document.id + '_authors', document.modifiedTime)
+            if authors:
+                document.authors = authors
+            else:
+                batch.add(self._revision_api.list(fields="nextPageToken, revisions(lastModifyingUser(displayName))", fileId=document.id, pageSize=1000), request_id=str(request_id))
+                self._document_items[str(request_id)] = document.id
+                request_id += 1
+        batch.execute(http=self._http)
 
         for document in self._documents.values():
             document.export()
 
         for appliance_id, appliance in self._appliances.items():
-            content = self._theme.render('appliance.html', appliance=appliance, appliance_id=appliance_id, root="..")
+            document = None
+            if appliance_id in self._documents_name:
+                document = self._documents_name[appliance_id]
+            content = self._theme.render('appliance.html', appliance=appliance, appliance_id=appliance_id, root="..", document=document)
             os.makedirs(os.path.join(export_dir, 'appliances'), exist_ok=True)
             with open(os.path.join(export_dir, 'appliances', appliance_id + '.html'), 'wb+') as f:
                 f.write(content.encode('utf-8'))

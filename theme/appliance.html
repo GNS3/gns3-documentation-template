@@ -1,35 +1,29 @@
-{% extends "base.html" %}
+{% extends "document.html" %}
 
 {% block title %}{{appliance['name']}} appliance - GNS3{% endblock %}
 
-{% block main %}
-<div class="header-push"></div>
-<div class="subheader">
-   <div class="breadcrumb">
-       <a href="{{root}}/">
-         <b>Documentation</b>
-      </a>
-      &nbsp; /  &nbsp;
-      <a href="{{root}}/1FFbs5hOBbx8O855KxLetlCwlbymTN8L1zXXQzCqfmy4/index.html#h.appliances">
-          Appliances
-      </a>
-      &nbsp; /  &nbsp;
-      <a href="#">{{appliance['name']}}</a>
-   </div>
-   <div class="search-input">
-      <div class="icon ion-android-search"></div>
-      <input type="text" placeholder="Search Documentation" class="search">
-   </div>
-</div>
+{% block breadcrumb %}
+    <a href="{{root}}/"><b>Documentation</b></a>
+    &nbsp; /  &nbsp;
+    <a href="{{root}}/1FFbs5hOBbx8O855KxLetlCwlbymTN8L1zXXQzCqfmy4/index.html#h.appliances">Appliances</a>
+    &nbsp; /  &nbsp;
+    <a href="#">{{appliance['name']}}</a>
+{% endblock %}
 
-<div class="gns3-document">
-    <div class="gns3-document-toc">
-        <h1>
-            <a href="#appliance_install">How to install</a>
-        </h1>
-        <h1>
-            <a href="#appliance_usage">Appliance usage</a>
-        </h1>
+{% block toc_top %}
+    <h1>
+        <a href="#appliance_install">How to install</a>
+    </h1>
+    {% if appliance['usage'] %}
+        <h1><a href="#appliance_usage">Appliance usage</a></h1>
+    {% endif %}
+    {% if 'qemu' in appliance %}
+        <h1><a href="#appliance_requirements">Appliance requirements</a></h1>
+    {% endif %}
+    {% if appliance['documentation_url'] %}
+        <h1><a href="#appliance_documentation">Appliance documentation</a></h1>
+    {% endif %}
+    {% if 'versions' in appliance %}
         <h1>
             <a href="#appliance_supported">Version supported</a>
         </h1>
@@ -38,57 +32,83 @@
                 <a href="#appliance_{{version["name"]}}">{{appliance['name']}} {{version["name"]}}</a>
             </h2>
         {% endfor %}
-    </div>
-    <div class="gns3-document-main">
-      <div class="gns3-wrapper gns3-document-styles">
-         <div>
-            <div class="doc-icon icon ion-ios-gear"></div>
-            <p class="title">{{appliance['name']}} appliance</h1>
-            <p>{{appliance['description']}}</p>
-            
-            <h1 id="appliance_install">How to install</h1>
-            <ul>
-                <li>Download the appliance file: <a href="https://gns3.com/external/download?url={{ ("https://raw.githubusercontent.com/GNS3/gns3-registry/master/appliances/" + appliance_id + ".gns3a") | urlencode }}">here</a></li>
-                <li>Download the files one of the supported version <a href="#appliance_supported">here</a></li>
-                <li>Import it in GNS3. <a href="{{root}}/1MAdxz0BSEAfGM7tA-w-o3TMmf8XOx7nBf0z6d9nRz_c/index.html">You can follow this tutorial</a></li>
-            </ul>
-            
-            <a href="{{root}}/1MAdxz0BSEAfGM7tA-w-o3TMmf8XOx7nBf0z6d9nRz_c/index.html"></a>
+    {% endif %}
+{% endblock %}
 
-            <h1 id="appliance_usage">Appliance usage</h1>
-            <p>{{appliance['usage']}}</p>
-            
-            <h1 id="appliance_supported">Version supported</h1>
-            {% for version in appliance['versions'] %}
-                <h2 id="appliance_{{version["name"]}}">{{appliance['name']}} {{version["name"]}}</h2>
-                <h3>Images require</h3>
-                <table>
-                    <tr>
-                        <td>File</td>
-                        <td></td>
-                    </tr>
-                    {% for key, filename in version["images"].items() %}
-                        {% for image in appliance["images"] %}
-                            {% if image["filename"] == filename %}
-                                <tr>
-                                    <td>{{filename}}</td>
-                                    <td>
-                                        {% if "direct_download_url" in image %}
-                                            <a href="{{image["direct_download_url"]}}">Download</a>
-                                        {% elif "download_url" in image %}
-                                            <a href="{{image["download_url"]}}">Download</a>
-                                        {% else %}
-                                            No download link available
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                            {% endif %}
-                        {% endfor %}
+{% block content_top %}
+    <p class="title">{{appliance['name']}} appliance</h1>
+
+    <p>{{appliance['description'].replace('\n', '<br/>')}}</p>
+
+    {% if 'product_url' in appliance %}
+        <p>More informations on <a href="{{appliance['product_url']}}">{{appliance['product_url']}}</a></p>
+    {% endif %}
+
+    <h1 id="appliance_install">How to install</h1>
+    <ul>
+        <li>Download the appliance file: <a href="https://gns3.com/external/download?url={{ ("https://raw.githubusercontent.com/GNS3/gns3-registry/master/appliances/" + appliance_id + ".gns3a") | urlencode }}">here</a></li>
+        {% if appliance['versions'] %}
+            <li>Download the files for one of the supported version <a href="#appliance_supported">here</a></li>
+        {% endif %}
+        {% if 'iou' in appliance %}
+            <li><a href="{{root}}//1PKfYwR78QP_Z3jqxBQ1pdy6SsqM27qhvdCvSmIizRh4">Setup IOU</a></li>
+        {% endif %}
+        <li>Import the .gns3a file in GNS3. <a href="{{root}}/1_3RdgLWgfk4ylRr99htYZrGMoFlJcmKAAaUAc8x9Ph8/index.html">You can follow this tutorial</a></li>
+    </ul>
+
+    {% if appliance['usage'] %}
+        <h1 id="appliance_usage">Appliance usage</h1>
+        <p>{{appliance['usage']}}</p>
+    {% endif %}
+
+    {% if 'qemu' in appliance %}
+        <h1 id="appliance_requirements">Appliance requirements</h1>
+        <p>RAM: {{appliance['qemu']['ram']}} MB</p>
+        {% if 'kvm' in appliance['qemu'] and appliance['qemu']['kvm'] == 'require' %}
+            <p>You need KVM enable on your machine or in the GNS3 VM.</p>
+        {% endif %}
+    {% endif %}
+
+    {% if appliance['documentation_url'] %}
+        <h1 id="appliance_documentation">Appliance documentation</h1>
+        <p>Documentation for using the appliance is available on <a href="{{appliance['documentation_url']}}">{{appliance['documentation_url']}}</a></p>
+    {% endif %}
+
+    {% if 'versions' in appliance %}
+        <h1 id="appliance_supported">Version supported</h1>
+        {% for version in appliance['versions'] %}
+            <h2 id="appliance_{{version["name"]}}">{{appliance['name']}} {{version["name"]}}</h2>
+            <h3>Images require</h3>
+            <table>
+                <tr>
+                    <td>File</td>
+                    <td>MD5</td>
+                    <td>Size</td>
+                    <td></td>
+                </tr>
+                {% for key, filename in version["images"].items() %}
+                    {% for image in appliance["images"] %}
+                        {% if image["filename"] == filename or ('.ova' in image["filename"] and filename.startswith(image["filename"])) %}
+                            <tr>
+                                <td>{{filename}}</td>
+                                <td>{{image["md5sum"]}}</td>
+                                <td>{{(image["filesize"] * 0.000001) | round }} MB</td>
+                                <td>
+                                    {% if "direct_download_url" in image %}
+                                        <a href="{{image["direct_download_url"]}}">Download</a>
+                                    {% elif "download_url" in image %}
+                                        <a href="{{image["download_url"]}}">Download</a>
+                                    {% else %}
+                                        No download link available
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endif %}
                     {% endfor %}
-                </table>
-            {% endfor %}
-         <div>
-      </div>
-   </div>
-</div>
+                {% endfor %}
+            </table>
+        {% endfor %}
+        <h2>Other versions</h2>
+        If you don't have this images you can try to add a new version follow instructions <a href="http://docs.gns3.com/1RpM21DdgL2pCNtIrw6e9Yf52tRjYZIe46LMeESl-jy4">here</a>.
+    {% endif %}
 {% endblock %}

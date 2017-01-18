@@ -232,7 +232,10 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             return self.render("document.html", root="..", document=FakeDocument())
         elif self.path.startswith("/appliances"):
             appliance_id = self.path.split("/")[-1:][0].split(".")[0]
-            return self.render("appliance.html", root="..", appliance=self._appliances[appliance_id], appliance_id=appliance_id)
+            if appliance_id == "cisco-asav":
+                return self.render("appliance.html", root="..", appliance=self._appliances[appliance_id], appliance_id=appliance_id, document=FakeDocument())
+            else:
+                return self.render("appliance.html", root="..", appliance=self._appliances[appliance_id], appliance_id=appliance_id)
         return super().do_GET()
 
 httpd = socketserver.TCPServer(("", PORT), Handler)

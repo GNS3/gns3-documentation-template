@@ -137,7 +137,7 @@ class DriveDocument:
                 filetitle = hashlib.md5(url.encode()).hexdigest()
                 purl = urllib.parse.urlparse(url)
                 filetitle += '.jpg'
-                element.set('src', filetitle)
+                element.set('src', '../' +  self._id + '/' + filetitle) # We go to top level to handle when the document is use as appliance
                 files.append((url, filetitle))
 
         self._toc = self._get_toc()
