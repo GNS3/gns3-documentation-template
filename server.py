@@ -11,6 +11,9 @@ from appliances import get_appliances
 
 PORT = 8000
 
+# import ssl
+# ssl._create_default_https_context = ssl._create_unverified_context
+
 # Filters
 def strftime(value, format):
     return value.strftime(format)

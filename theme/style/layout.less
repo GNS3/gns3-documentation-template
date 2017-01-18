@@ -7,10 +7,39 @@
    .subheader {
       .search-input { display: none; }
    }
+   .button-back {
+      display: none;
+   }
 }
 
 @media screen and (min-width: 1100px) {
+   .button-back {
+      position: absolute;
+      top: 120px;
+      left: 42px;
+      width: 54px;
+      height: 54px;
+      line-height: 48px;
+      text-align: center;
+      border-radius: 50%;
+      letter-spacing: 3px;
+      z-index: 999;
+      border: 3px solid #ccc;
+      border: 3px solid rgba(255,255,255,0.6);
+      color: #ccc;
+      color: rgba(255,255,255,0.6);
+      cursor: pointer;
+      transition: 300ms;
 
+      &:hover {
+         border-color: rgba(255,255,255,0.8);
+         color: rgba(255,255,255,0.8);
+      }
+
+      .icon {
+         font-size: 24px !important;
+      }
+   }
 }
 
 //======================================================================
@@ -167,7 +196,7 @@ body {
       position: relative;
       width: 240px;
       height: 36px;
-      margin: 12px 0;
+      margin: 20px 0;
       line-height: normal;
 
       .icon {
