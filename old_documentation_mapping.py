@@ -67,6 +67,9 @@ for page_id, redirect_to in mappings:
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="refresh" content="0;url=https://docs.gns3.com/{redirect_to}">
+<script type="text/javascript"><!--
+location.replace("https://docs.gns3.com/{redirect_to}");
+//--></script>
         <title>Page Redirection</title>
     </head>
     <body>
