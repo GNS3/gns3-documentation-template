@@ -19,6 +19,24 @@ def strftime(value, format):
     return value.strftime(format)
 
 
+def youtube_playlist(playlist_id):
+    import xml.etree.ElementTree as ET
+    import urllib.request
+    import datetime
+
+    url = "https://www.youtube.com/feeds/videos.xml?max-results=100&playlist_id=" + playlist_id
+    videos = []
+    with urllib.request.urlopen(url) as f:
+        root = ET.parse(f).getroot()
+        for entry in root.iter('{http://www.w3.org/2005/Atom}entry'):
+            video = {}
+            video['id'] = entry.find('{http://www.youtube.com/xml/schemas/2015}videoId').text
+            video['date'] = datetime.datetime.strptime(entry.find('{http://www.w3.org/2005/Atom}published').text, '%Y-%m-%dT%H:%M:%S+00:00')
+            video['title'] = entry.find('{http://www.w3.org/2005/Atom}title').text
+            videos.append(video)
+    return videos
+
+
 def youtube_channel(channel_id):
     import xml.etree.ElementTree as ET
     import urllib.request
@@ -211,6 +229,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self._env = Environment(loader=FileSystemLoader('theme'))
         self._env.filters['strftime'] = strftime
         self._env.filters['youtube_channel'] = youtube_channel
+        self._env.filters['youtube_playlist'] = youtube_playlist
         self._env.filters['theme'] = theme
         self._appliances = get_appliances()
         super().__init__(*args)
