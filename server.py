@@ -1,6 +1,7 @@
 from jinja2 import Environment, FileSystemLoader
 
 import os
+import json
 import hashlib
 import http.server
 import http.client
@@ -11,8 +12,6 @@ from appliances import get_appliances
 
 PORT = 8000
 
-# import ssl
-# ssl._create_default_https_context = ssl._create_unverified_context
 
 # Filters
 def strftime(value, format):
@@ -20,20 +19,25 @@ def strftime(value, format):
 
 
 def youtube_playlist(playlist_id):
-    import xml.etree.ElementTree as ET
     import urllib.request
     import datetime
 
-    url = "https://www.youtube.com/feeds/videos.xml?max-results=100&playlist_id=" + playlist_id
     videos = []
-    with urllib.request.urlopen(url) as f:
-        root = ET.parse(f).getroot()
-        for entry in root.iter('{http://www.w3.org/2005/Atom}entry'):
-            video = {}
-            video['id'] = entry.find('{http://www.youtube.com/xml/schemas/2015}videoId').text
-            video['date'] = datetime.datetime.strptime(entry.find('{http://www.w3.org/2005/Atom}published').text, '%Y-%m-%dT%H:%M:%S+00:00')
-            video['title'] = entry.find('{http://www.w3.org/2005/Atom}title').text
-            videos.append(video)
+    pageToken = ''
+    while True:
+        # The key is restricted to some IP https://console.developers.google.com/apis/credentials?project=documentation-151710
+        url = "https://www.googleapis.com/youtube/v3/playlistItems?playlistId=" + playlist_id + "&key=AIzaSyCLXG1nmMPfJ_fWgTlikFpc5f_7LVyhioE&part=snippet&maxResults=50&pageToken=" + pageToken
+        with urllib.request.urlopen(url) as data:
+            content = json.loads(data.read().decode())
+            for item in content["items"]:
+                video = {}
+                video['id'] = item['snippet']['resourceId']['videoId']
+                video['date'] = datetime.datetime.strptime(item['snippet']['publishedAt'], '%Y-%m-%dT%H:%M:%S.000Z')
+                video['title'] = item['snippet']['title']
+                videos.append(video)
+            if 'nextPageToken' not in content:
+                break
+            pageToken = content['nextPageToken']
     return videos
 
 
