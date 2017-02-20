@@ -252,7 +252,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             return self.render("videos.html")
         elif self.path == "/1FFbs5hOBbx8O855KxLetlCwlbymTN8L1zXXQzCqfmy4/index.html":
             return self.render("explore.html", root='..', document=FakeTocDocument())
-        elif self.path == "/17Jj0doZyFf-KYyZ1czJufQMlIK8UMlxpoegYs_3Po6Q/index.html":
+        elif self.path == "/release.html":
             return self.render("release.html", root='..', document=FakeReleaseDocument())
         elif self.path.startswith("/1") and self.path.endswith("/index.html"):
             return self.render("document.html", root="..", document=FakeDocument())
