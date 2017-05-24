@@ -183,8 +183,7 @@ class Drive:
                         #         f.write(data)
                 request = files_api.list_next(request, results)
 
-
-        batch.execute(http=self._http)
+        self._batch_execute(batch)
 
         # Batch requests for getting document authors
         batch = self._service.new_batch_http_request(callback=self._callback_document_authors)
@@ -196,7 +195,7 @@ class Drive:
                 batch.add(self._revision_api.list(fields="nextPageToken, revisions(lastModifyingUser(displayName))", fileId=document.id, pageSize=1000), request_id=str(request_id))
                 self._document_items[str(request_id)] = document.id
                 request_id += 1
-        batch.execute(http=self._http)
+        self._batch_execute(batch)
 
         for document in self._documents.values():
             document.export()
@@ -221,6 +220,9 @@ class Drive:
 
         print('Export finish file are inside', export_dir)
 
+    @retry(wait_exponential_multiplier=1000, stop_max_attempt_number=5)
+    def _batch_execute(self, batch):
+        batch.execute(http=self._http)
 
     @retry(wait_exponential_multiplier=1000, stop_max_attempt_number=10)
     def _permissions_for_anyone(self, item):
