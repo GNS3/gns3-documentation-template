@@ -5,7 +5,6 @@ import lxml.html
 import lxml.etree
 import urllib
 import hashlib
-import copy
 import os
 import re
 
@@ -135,7 +134,6 @@ class DriveDocument:
                 element.set('href', process_link(url, root=root))
             elif element.tag == 'img' and attr == 'src':
                 filetitle = hashlib.md5(url.encode()).hexdigest()
-                purl = urllib.parse.urlparse(url)
                 filetitle += '.jpg'
                 element.set('src', '../' +  self._id + '/' + filetitle) # We go to top level to handle when the document is use as appliance
                 files.append((url, filetitle))

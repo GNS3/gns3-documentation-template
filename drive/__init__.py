@@ -5,12 +5,10 @@ import string
 import base64
 import shutil
 import json
-import lxml
 import os
 
 from retrying import retry
 from apiclient import discovery
-from apiclient.http import BatchHttpRequest
 
 import oauth2client
 import oauth2client.contrib.dictionary_storage
@@ -21,7 +19,6 @@ import jinja2.exceptions
 
 from .appliances import get_appliances
 from .document import DriveDocument
-from .utils import process_link
 from .theme import Theme
 
 # If modifying these scopes, delete your previously saved credentials
@@ -135,7 +132,6 @@ class Drive:
         documents_id = set()
         documents_id.add((".", self._config['folder_id'], ))
         processed_ids = set()
-        documents = []
         files_api = self._service.files()
         self._revision_api = self._service.revisions()
         self._permissions_api = self._service.permissions()
