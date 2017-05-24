@@ -9,6 +9,7 @@ import os
 
 from retrying import retry
 from apiclient import discovery
+from apiclient.errors import HttpError
 
 import oauth2client
 import oauth2client.contrib.dictionary_storage
@@ -195,7 +196,11 @@ class Drive:
                 batch.add(self._revision_api.list(fields="nextPageToken, revisions(lastModifyingUser(displayName))", fileId=document.id, pageSize=1000), request_id=str(request_id))
                 self._document_items[str(request_id)] = document.id
                 request_id += 1
-        self._batch_execute(batch)
+
+        try:
+            self._batch_execute(batch)
+        except HttpError:
+            pass # Sometimes google doesn't answer to that we ignore that to continue the generation
 
         for document in self._documents.values():
             document.export()
