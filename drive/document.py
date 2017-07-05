@@ -305,10 +305,14 @@ class DriveDocument:
 
     def _replace_youtube_videos(self):
         for (element, attr, url, _) in list(self._html.iterlinks()):
-            if element.tag == 'a' and attr == 'href' and 'youtube.com/watch' in url:
+            if element.tag == 'a' and attr == 'href' and \
+                    ('youtube.com/watch' in url or 'youtu.be' in url) :
                 purl = urllib.parse.urlparse(url)
-                qs = urllib.parse.parse_qs(purl.query)
-                url = "https://www.youtube.com/embed/" + qs["v"][0]
+                if 'youtu.be' in url:
+                    url = "https://www.youtube.com/embed/" + purl.path.strip('/')
+                else:
+                    qs = urllib.parse.parse_qs(purl.query)
+                    url = "https://www.youtube.com/embed/" + qs["v"][0]
 
                 element.tag = 'iframe'
                 element.set('src', url)

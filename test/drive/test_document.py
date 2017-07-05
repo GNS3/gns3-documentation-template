@@ -1,4 +1,3 @@
-import lxml
 import pytest
 import pathlib
 from unittest.mock import patch
@@ -73,6 +72,7 @@ def test_process_youtube_embed(tmpdir):
     <body>
         <p>Hello</p>
         <p><span><a href="https://www.youtube.com/watch?v=qIRGcKs_MRE">https://www.youtube.com/watch?v=qIRGcKs_MRE</a></span></p>
+        <p><span><a href="https://youtu.be/aIRGcKs_MRE">AAAA</a></span></p>
         <p>World</p>
     </body>
 </html>"""
@@ -81,6 +81,7 @@ def test_process_youtube_embed(tmpdir):
     assert '<body>' in html
     assert '<p>Hello</p>' in html
     assert '<iframe src="https://www.youtube.com/embed/qIRGcKs_MRE" width="560" height="315" frameborder="0" allowfullscreen="1" style="display:block"></iframe>' in html
+    assert '<iframe src="https://www.youtube.com/embed/aIRGcKs_MRE" width="560" height="315" frameborder="0" allowfullscreen="1" style="display:block"></iframe>' in html
     assert '<p>World</p>' in html
 
 
