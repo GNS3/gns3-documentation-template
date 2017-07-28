@@ -6,7 +6,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/python:3.6.1
+        - image: circleci/python:3.6.1
 
     working_directory: ~/repo
 
@@ -70,3 +70,9 @@ jobs:
             git config --global user.name "GNS3 build"
             git commit -am "Build" || echo "No changes"
             git push origin master
+
+      - run:
+         name: deploy documentation
+         command: |
+            cd export
+            scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -v -r . gns3build@web.sourceforge.net:/home/project-web/gns-3/htdocs
