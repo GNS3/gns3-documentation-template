@@ -1,0 +1,72 @@
+# Python CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-python/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.6.1
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "requirements.txt" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run:
+          name: install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
+
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
+      
+      - run:
+          name: credentials
+          command: |
+              echo $CLIENT_SECRET > client_secret.json
+              echo $CONFIG > config.json
+
+      - run:
+          name: clone documentation
+          command: |
+            git clone git@github.com:GNS3/gns3-documentation.git export
+      
+      - restore_cache:
+          keys:
+          - v1-http-cache
+
+      - run:
+         name: build documentation
+         command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            python3 main.py config.json export
+            cd export
+            python lint.py
+      
+      - save_cache:
+          paths:
+            - ./cache 
+          key: v1-http-cache
+
+      - run:
+         name: push documentation
+         command: |
+            cd export
+            git add .
+            git config --global user.email "developers@gns3"
+            git config --global user.name "GNS3 build"
+            git commit -am "Build" || echo "No changes"
+            git push origin master
