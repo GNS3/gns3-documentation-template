@@ -60,7 +60,8 @@ class Drive:
     def _callback_document_exported(self, request_id, data, exception):
         if exception:
             print(exception)
-            raise exception
+            #raise exception
+            return # We ignore to avoid breaking build due to rate limit. The page will not be refresh
 
         item = self._document_items[request_id]
         self._build_document(item, data)
