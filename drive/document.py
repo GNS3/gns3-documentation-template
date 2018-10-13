@@ -162,13 +162,15 @@ class DriveDocument:
         """
         for img in self._html.iter('img'):
             img.attrib.pop('style', None)
-            a = img
-            a.attrib["href"] = img.attrib.pop("src", None)
-            a.attrib["target"] = "_blank"
-            a.tag = "a"
-            img = lxml.html.builder.IMG()
-            img.attrib["src"] = a.attrib["href"]
-            a.append(img)
+            href = img.attrib.pop("src", None)
+            if href is not None:
+                a = img
+                a.attrib["href"] = href
+                a.attrib["target"] = "_blank"
+                a.tag = "a"
+                img = lxml.html.builder.IMG()
+                img.attrib["src"] = a.attrib["href"]
+                a.append(img)
 
     def _annotate(self):
         """
