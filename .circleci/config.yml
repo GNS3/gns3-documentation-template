@@ -77,3 +77,15 @@ jobs:
             rm -rf export/.git
             cd export
             scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -v -r . gns3build@web.sourceforge.net:/home/project-web/gns-3/htdocs
+workflows:
+  version: 2
+  hourly:
+    jobs:
+      - build
+    triggers:
+       - schedule:
+           cron: "0 * * * *"
+           filters:
+            branches:
+              only:
+                 - master
