@@ -79,12 +79,12 @@ jobs:
             scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -v -r . gns3build@web.sourceforge.net:/home/project-web/gns-3/htdocs
 workflows:
   version: 2
-  hourly:
+  nightly:
     jobs:
       - build
     triggers:
        - schedule:
-           cron: "0 * * * *"
+           cron: "0 0 * * *"
            filters:
             branches:
               only:
